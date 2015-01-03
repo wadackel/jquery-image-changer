@@ -1,6 +1,9 @@
 jQuery.imageChanger
 ====
 
+![jQuery.imageChanger.js](http://webdesign-dackel.com/dev/imagechanger/images/plugin.png)
+
+
 ## Version
 2.0.0
 

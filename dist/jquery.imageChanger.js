@@ -3,7 +3,7 @@
  * version: 2.0.0
  * license: MIT
  * copyright: tsuyoshiwada 2015 All Right Reserved.
- * build: 2015-01-03 23:23:09 GMT+0900
+ * build: 2015-01-04 00:13:56 GMT+0900
  */
 ;(function($, window, undefined){
 	"use strict";
@@ -303,7 +303,7 @@
 
 			// append
 			$off.css("z-index", 2).addClass(ClassName.off);
-			$("."+ClassName.image).append($on);
+			this.$elem.find("."+ClassName.image).append($on);
 		}
 
 		this.$on = $on;

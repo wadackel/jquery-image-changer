@@ -10,9 +10,18 @@
 <body>
 	<div class="container">
 		<h1>Transition Slide</h1>
+		<p>Off画像、On画像がスライドして切り替わります。directionオプションで上下左右の切り替えを設定出来ます。</p>
 
 		<div class="buttons">
-			<a class="rollover" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+			<h2>Direction</h2>
+			<h3>Top</h3>
+			<p><a id="slide-top" href="index.html"><img src="images/btn.png" alt="Button" /></a></p>
+			<h3>Right</h3>
+			<p><a id="slide-right" href="index.html"><img src="images/btn.png" alt="Button" /></a></p>
+			<h3>Bottom</h3>
+			<p><a id="slide-bottom" href="index.html"><img src="images/btn.png" alt="Button" /></a></p>
+			<h3>Left</h3>
+			<p><a id="slide-left" href="index.html"><img src="images/btn.png" alt="Button" /></a></p>
 		</div>
 	</div>
 
@@ -20,9 +29,28 @@
 	<script type="text/javascript" src="../dist/jquery.imageChanger.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		$(".rollover").imageChanger({
+		$("#slide-top").imageChanger({
 			transition: {
-				type: "slide"
+				type: "slide",
+				direction: "top"
+			}
+		});
+		$("#slide-right").imageChanger({
+			transition: {
+				type: "slide",
+				direction: "right"
+			}
+		});
+		$("#slide-bottom").imageChanger({
+			transition: {
+				type: "slide",
+				direction: "bottom"
+			}
+		});
+		$("#slide-left").imageChanger({
+			transition: {
+				type: "slide",
+				direction: "left"
 			}
 		});
 	});

@@ -301,7 +301,7 @@
 
 			// append
 			$off.css("z-index", 2).addClass(ClassName.off);
-			$("."+ClassName.image).append($on);
+			this.$elem.find("."+ClassName.image).append($on);
 		}
 
 		this.$on = $on;
