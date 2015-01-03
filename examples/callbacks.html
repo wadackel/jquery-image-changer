@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Callbacks - jQuery.imageChanger.js</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Callbacks</h1>
+
+		<div class="buttons">
+			<a class="rollover" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+		</div>
+		<div class="status"><pre><code></code></pre></div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../dist/jquery.imageChanger.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var $status = $(".status pre code");
+
+		$(".rollover").imageChanger({
+			beforeInit: function(){ addStatus('Callback: beforeInit'); },
+			afterInit: function(){ addStatus('Callback: afterInit'); },
+			beforeChange: function(){ addStatus('Callback: beforeChange'); },
+			afterChange: function(){ addStatus('Callback: afterChange'); },
+			beforeOnImage: function(){ addStatus('Callback: beforeOnImage'); },
+			afterOnImage: function(){ addStatus('Callback: afterOnImage'); },
+			beforeOffImage: function(){ addStatus('Callback: beforeOffImage'); },
+			afterOffImage: function(){ addStatus('Callback: afterOffImage'); }
+		});
+
+		function addStatus(str){
+			$status.html( $status.html() + str + "<br>" );
+		}
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Transition Custom - jQuery.imageChanger.js</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Transition Custom</h1>
+
+		<div class="buttons">
+			<a class="rollover" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../dist/jquery.imageChanger.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".rollover").imageChanger({
+			transition: {
+				type: "custom",
+				defaults: {
+					easing: "swing",
+					duration: 150
+				},
+				initialize: function(params){
+					this.$elem.css("overflow", "hidden");
+					this.$on.css({
+						"top": -20,
+						"opacity": 0
+					});
+				},
+				on: function(params, done){
+					this.$off.stop().animate({
+						"top": -20,
+						"opacity": 0
+					}, params.duration, params.easing);
+					this.$on.stop().animate({
+						"top": 0,
+						"opacity": 1
+					}, params.duration, params.easing, done);
+				},
+				off: function(params, done){
+					this.$off.stop().animate({
+						"top": 0,
+						"opacity": 1
+					}, params.duration, params.easing);
+					this.$on.stop().animate({
+						"top": -20,
+						"opacity": 0
+					}, params.duration, params.easing, done);
+				},
+			}
+		});
+	});
+	</script>
+</body>
+</html>

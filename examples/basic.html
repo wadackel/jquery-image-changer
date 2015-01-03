@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Basic - jQuery.imageChanger.js</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+	.btn {
+	}
+	.btn01 {
+	}
+	.btn02 {
+		position:relative;
+		left:50px;
+	}
+	.btn03 {
+		position:absolute;
+		top:20px;
+		left:40px;
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Basic</h1>
+
+		<h2>Position - static or relative</h2>
+		<div class="buttons">
+			<a class="rollover btn btn01" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+			<a class="rollover btn btn02" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+		</div>
+
+		<h2>Position - absolute</h2>
+		<div class="buttons">
+			<a class="rollover btn btn03" href="index.html"><img src="images/btn.png" alt="Button" /></a>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../dist/jquery.imageChanger.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".rollover").imageChanger();
+	});
+	</script>
+</body>
+</html>
