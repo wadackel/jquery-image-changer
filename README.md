@@ -9,7 +9,7 @@ jQuery.imageChanger
 
 
 ## Description
-画像切り替えを行う為のjQueryプラグインです。
+フェード等のアニメーションを付けて、On、Off画像の切り替えを行う為のjQueryプラグインです。
 
 
 ## Demo
@@ -22,7 +22,7 @@ imageChangerは下記の様な特徴を持ちます。
 * hoverアクションに応じてOn,Off画像を切替える。オプションでhoverを無効に設定可能
 * 切り替え画像の接尾辞をオプションで変更可能
 * クロスフェードやスライド等、切替時のアニメーションを設定可能
-* 切り替えのアニメーションを独自で設定可能
+* オプションで切り替えのアニメーションを拡張可能
 * 背景画像の切り替えに対応
 * On画像読み込めない場合(404等)は、切り替えを行わない
 * 各アクションが実行された場合のコールバック、イベントをサポート
@@ -245,12 +245,13 @@ Off画像に切替えます。
 * **`initialize()`** スタイルやDOMの構成など、初期化処理を実装します。
 * **`on()`** On画像への切替処理を実装します。
 * **`off()`** Off画像への切替処理を実装します。
+* **`destroy()`** `ImageChanger#destroy()`実行時の処理を実装します。
 
 `on()`, `off()`の第一引数には、コールバックの関数が入ってくるので、
 処理が終わったら、関数を実行します。
 詳細のコードは、`examples/transition-custom.html`を参照して下さい。
 
-~~~~
+~~~~javascript
 {
 	type: "custom",
 	defaults: {
@@ -266,8 +267,48 @@ Off画像に切替えます。
 
 	off: function(params, done){
 		done.call();
+	},
+
+	destroy: function(params){
 	}
 }
+~~~~
+
+また、`jQuery.imageChanger.registerTransition()`を使うことで
+ビルトインのtransitionとして登録することが出来ます。  
+登録したtransitionは、`type`オプションに第一引数で指定した`name`を
+指定することで使うことが出来ます。
+
+**Example:**
+
+~~~~javascript
+// Register Custom Transition.
+$.imageChanger.registerTransition("example", {
+	defaults: {
+		// default parametors...
+	},
+
+	initialize: function(params){
+	},
+
+	on: function(params, done){
+		done.call();
+	},
+
+	off: function(params, done){
+		done.call();
+	},
+
+	destroy: function(params){
+	}
+});
+
+// Use Custom Transition.
+$(selector).imageChanger({
+	transition: {
+		type: "example"
+	}
+});
 ~~~~
 
 
@@ -287,6 +328,16 @@ $(selector).imageChanger({
 
 ## Requirements
 jQuery 1.7.2 +
+
+
+## Browser Support
+
+* IE7 +
+* Firefox
+* Chrome
+* Safari
+* iOS5 +
+* Android2.3 +
 
 
 
