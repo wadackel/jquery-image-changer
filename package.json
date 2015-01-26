@@ -1,6 +1,6 @@
 {
   "name": "jQuery.imageChanger",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "画像切り替えを行う為のjQueryプラグイン。",
   "repository": {
     "type": "git",
