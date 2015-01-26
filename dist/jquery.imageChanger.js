@@ -1,14 +1,14 @@
 /*!
  * jQuery.imageChanger 
- * version: 2.0.0
+ * version: 2.0.1
  * license: MIT
  * copyright: tsuyoshiwada 2015 All Right Reserved.
- * build: 2015-01-27 01:42:29 GMT+0900
+ * build: 2015-01-27 02:15:31 GMT+0900
  */
 ;(function($, window, undefined){
 	"use strict";
 
-	var version = "2.0.0",
+	var version = "2.0.1",
 
 	// Default Options
 	defaults = {
@@ -693,6 +693,7 @@
 	// Run imageChanger
 	$.fn.imageChanger = function(options){
 		return this.each(function(){
+			
 			var $this = $(this),
 					dataOptions = {},
 					val;
