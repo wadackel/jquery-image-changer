@@ -17,7 +17,7 @@ jQuery.imageChanger
 
 
 ## Features
-imageChangerは下記の様な特徴を持ちます。
+`jQuery.imageChanger.js`は下記の様な特徴を持ちます。
 
 * hoverアクションに応じてOn,Off画像を切替える。オプションでhoverを無効に設定可能
 * 切り替え画像の接尾辞をオプションで変更可能
@@ -32,21 +32,18 @@ imageChangerは下記の様な特徴を持ちます。
 
 ## How To Use
 
-### Load jQuery and include imageChanger plugin files.
-
+### jQueryとjQuery.imageChanger.jsを読み込みます
 ~~~~html
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.imagechanger.min.js"></script>
 ~~~~
 
 ### Set up HTML
-
 ~~~~html
 <a class="rollover" href="http://example.com" ><img src="path/to/image.jpg" alt="image"></a>
 ~~~~
 
 ### Call the plugin
-
 ~~~~javascript
 $(document).ready(function(){
 	$(".rollover").imageChanger();
@@ -71,7 +68,6 @@ On画像のファイル名につける接尾辞を指定します。
 切替時の動作を指定します。  
 **Default: fade**  
 **Type: `object`**
-
 ~~~~javascript
 {
 	type: "fade",
@@ -83,7 +79,6 @@ On画像のファイル名につける接尾辞を指定します。
 
 
 **not animations:**
-
 ~~~~javascript
 {
 	type: false
@@ -91,7 +86,6 @@ On画像のファイル名につける接尾辞を指定します。
 ~~~~
 
 **wink:**
-
 ~~~~javascript
 {
 	type: "wink",
@@ -102,10 +96,9 @@ On画像のファイル名につける接尾辞を指定します。
 ~~~~
 
 **slide:**
-
 ~~~~javascript
 {
-	type: "custom",
+	type: "slide",
 	duration: 150,
 	easing: "swing",
 	direction: "top", // "top" | "bottom" | "left" | "right"
@@ -280,7 +273,6 @@ Off画像に切替えます。
 指定することで使うことが出来ます。
 
 **Example:**
-
 ~~~~javascript
 // Register Custom Transition.
 $.imageChanger.registerTransition("example", {
@@ -313,7 +305,6 @@ $(selector).imageChanger({
 
 
 ## Transition Examples (Use Buitlin)
-
 ~~~~javascript
 $(selector).imageChanger({
 	transition: {
@@ -331,7 +322,6 @@ jQuery 1.7.2 +
 
 
 ## Browser Support
-
 * IE7 +
 * Firefox
 * Chrome
@@ -340,13 +330,13 @@ jQuery 1.7.2 +
 * Android2.3 +
 
 
+## Change Log
+* **[2015.01.04]** First release.
+
 
 ## Licence
-
 Released under the [MIT Licence](https://github.com/tcnksm/tool/blob/master/LICENCE)
 
 
-
 ## Author
-
 [tsuyoshi wada](https://github.com/tsuyoshiwada/)
