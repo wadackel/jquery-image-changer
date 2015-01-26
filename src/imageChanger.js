@@ -29,6 +29,8 @@
 		afterOffImage: false
 	},
 
+	optionKeys = $.map(defaults, function(v, k){ return k; }),
+
 	// Namespace
 	ns = "ic",
 
@@ -689,8 +691,22 @@
 	// Run imageChanger
 	$.fn.imageChanger = function(options){
 		return this.each(function(){
-			if( !$(this).data("imageChanger") ){
-				$(this).data("imageChanger", new ImageChanger($(this), $.extend({}, defaults, options)));
+			
+			var $this = $(this),
+					dataOptions = {},
+					val;
+
+			if( !$this.data("imageChanger") ){
+				// Parse custom data attributes.
+				$.each(optionKeys, function(i, d){
+					val = $this.data( $.camelCase(ns + "-" + d.toLowerCase()) );
+					if( val !== undefined ){
+						dataOptions[d] = val;
+					}
+				});
+
+				// Create ImageChanger instance
+				$this.data("imageChanger", new ImageChanger($(this), $.extend({}, defaults, options, dataOptions)));
 			}
 		});
 	};

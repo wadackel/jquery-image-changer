@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Custom-data - jQuery.imageChanger.js</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Custom-data</h1>
+		<p>カスタムdata属性を使ったオプション指定に対応します。</p>
+
+		<div class="buttons">
+			<a class="rollover" href="index.html" data-ic-suffix="_active" data-ic-hover="true" data-ic-transition='{"type":"slide", "duration":100}'><img src="images/btn.png" alt="Button" /></a>
+			<a class="rollover" href="index.html" data-ic-hover="false"><img src="images/btn.png" alt="Button" /></a>
+			<a class="rollover btn-bg" href="index.html" data-ic-backgroundImage="true">Button</a>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../dist/jquery.imageChanger.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".rollover").imageChanger();
+	});
+	</script>
+</body>
+</html>

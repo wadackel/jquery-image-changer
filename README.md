@@ -164,6 +164,36 @@ Off画像に切り替わった直後にコールされます。
 **Type: `function`**
 
 
+## Custom data attributes
+カスタムデータ属性を使ったオプションの指定に対応します。  
+`data-ic-`に続けてオプション名、オプション値を指定します。
+データ属性を使って指定したオプションは、`$.fn.imageChanger()`で
+指定したオプションよりも優先されます。
+
+下記の例では実行時、data属性のオプションが優先されることで次の様にオプションが有効になります。
+
+* **suffix: "_active"**
+* **transition: {type:wink}**
+
+**Example:**
+
+**HTML**
+~~~~html
+<a class="rollover" href="http://example.com" data-ic-suffix="_active" data-ic-transition='{"type":"wink"}'><img src="path/to/image.jpg" alt="image"></a>
+~~~~
+
+**JavaScript**
+~~~~javascript
+$(function(){
+	$(".rollover").imageChanger({
+		suffix: "_on",
+		transition: {
+			type: "fade"
+		}
+	});
+});
+~~~~
+
 
 ## Custom Events
 `jQuery#on()`を使って、イベントをバインドします。
@@ -209,7 +239,6 @@ imageChangerオブジェクトを取得出来ます。
 var ic = $(selector).imageChanger().data("imageChanger");
 ic.method();
 ~~~~
-
 
 
 ### toggle
@@ -331,6 +360,7 @@ jQuery 1.7.2 +
 
 
 ## Change Log
+* **[2015.01.27]** Support the option specified in the custom data attributes.
 * **[2015.01.04]** First release.
 
 
