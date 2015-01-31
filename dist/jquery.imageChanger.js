@@ -1,14 +1,14 @@
 /*!
  * jQuery.imageChanger 
- * version: 2.0.1
+ * version: 2.0.2
  * license: MIT
  * copyright: tsuyoshiwada 2015 All Right Reserved.
- * build: 2015-01-31 20:26:51 GMT+0900
+ * build: 2015-01-31 20:49:36 GMT+0900
  */
 ;(function($, window, undefined){
 	"use strict";
 
-	var version = "2.0.1",
+	var version = "2.0.2",
 
 	// Default Options
 	defaults = {
