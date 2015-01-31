@@ -69,7 +69,11 @@
 			display: "inline-block"
 		},
 		initialize: function(params){
+
+			var position = this.$elem.css("position") === "static" ? "relative" : this.$elem.css("position");
+
 			this.$elem.css({
+				"position": position,
 				"overflow": "hidden",
 				"display": params.display
 			});
@@ -149,6 +153,21 @@
 			}
 		},
 		destroy: function(){
+			var emptyPosition = {
+				"top": "",
+				"right": "",
+				"bottom": "",
+				"left": ""
+			};
+
+			this.$off.stop(true,true).css(emptyPosition);
+			this.$on.stop(true,true).css(emptyPosition);
+
+			this.$elem.css({
+				"position": "",
+				"overflow": "",
+				"display": ""
+			});
 		}
 	});
 

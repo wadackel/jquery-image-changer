@@ -360,6 +360,7 @@ jQuery 1.7.2 +
 
 
 ## Change Log
+* **[2015.01.31]** Fix IE7 `slide` transition bugs.
 * **[2015.01.27]** Support the option specified in the custom data attributes.
 * **[2015.01.04]** First release.
 

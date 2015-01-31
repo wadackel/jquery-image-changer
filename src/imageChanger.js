@@ -124,34 +124,33 @@
 	// Instance
 	// ===============================================================
 	function ImageChanger(){
-		this._initialize.apply(this, arguments);
-	}
+		this.version = version;
+		this.options = null;
+		this.transition = null;
+		this.imageTypes = "";
 
-	ImageChanger.prototype = {
-		version: version,
-		options: null,
-		transition: null,
-		imageTypes: "",
+		this.$elem = null;
+		this.$img = null;
+		this.$parant = null;
+		this.$on = null;
+		this.$off = null;
 
-		$elem: null,
-		$img: null,
-		$parant: null,
-		$on: null,
-		$off: null,
-
-		status: {
+		this.status = {
 			active: false,
 			animate: false,
 			enable: false,
 			loaded: false,
 			error: false
-		},
+		};
 
-		touchTimer: false,
+		this.touchTimer = false;
 
-		on: "",
-		off: ""
-	};
+		this.on = "";
+		this.off = "";
+
+		// Initialize
+		this._initialize.apply(this, arguments);
+	}
 
 	/**
 	 * 初期化
@@ -706,7 +705,7 @@
 				});
 
 				// Create ImageChanger instance
-				$this.data("imageChanger", new ImageChanger($(this), $.extend({}, defaults, options, dataOptions)));
+				$this.data("imageChanger", new ImageChanger($this, $.extend({}, defaults, options, dataOptions)));
 			}
 		});
 	};
