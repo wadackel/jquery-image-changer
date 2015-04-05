@@ -1,10 +1,4 @@
-/*!
- * jquery-image-changer
- * author: tsuyoshiwada
- * version: 2.0.3
- * license: MIT
- * copyright: tsuyoshiwada
- */;(function(root, factory){
+;(function(root, factory){
   "use strict";
 
   // CommonJS module.

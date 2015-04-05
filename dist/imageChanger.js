@@ -1,32 +1,50 @@
-/**
- * =======================================================
- * imageChanger core
- * =======================================================
- */
-;(function($, window, undefined){
+/*!
+ * jquery-image-changer
+ * author: tsuyoshiwada
+ * version: 2.0.3
+ * license: MIT
+ * copyright: tsuyoshiwada
+ */;(function(root, factory){
+  "use strict";
+
+  // CommonJS module.
+  if( typeof module === "object" && typeof module.exports === "object" ){
+    factory(require("jquery"));
+
+  // AMD module.
+  }else if( typeof define === "function" && define.amd ){
+    define(["jquery"], factory);
+
+  // Browser globals. root = window
+  }else{
+    factory(root.jQuery);
+  }
+
+
+}(this, function($){
 	"use strict";
 
-	var version = "2.0.2",
+	var version = "2.0.3",
 
 	// Default Options
 	defaults = {
-		suffix: "_on", // img.png => img_on.png
-		hover: true,
-		transition: {
+		suffix         : "_on", // img.png => img_on.png
+		hover          : true,
+		transition     : {
 			type: "fade"
 		},
 		backgroundImage: false,
-		imageTypes: "jpg|jpeg|gif|png",
+		imageTypes     : "jpg|jpeg|gif|png",
 
 		// Callbacks
-		beforeInit: false,
-		afterInit: false,
-		beforeChange: false,
-		afterChange: false,
-		beforeOnImage: false,
-		afterOnImage: false,
-		beforeOffImage: false,
-		afterOffImage: false
+		beforeInit     : false,
+		afterInit      : false,
+		beforeChange   : false,
+		afterChange    : false,
+		beforeOnImage  : false,
+		afterOnImage   : false,
+		beforeOffImage : false,
+		afterOffImage  : false
 	},
 
 	optionKeys = $.map(defaults, function(v, k){ return k; }),
@@ -37,22 +55,22 @@
 	// Events
 	MouseEvent = {
 		ROLL_OVER: "mouseenter." + ns,
-		ROLL_OUT: "mouseleave." + ns,
-		CLICK: "click." + ns
+		ROLL_OUT : "mouseleave." + ns,
+		CLICK    : "click." + ns
 	},
 
 	TouchEvent = {
 		TOUCH_START: "touchstart." + ns,
-		TOUCH_END: "touchend." + ns,
-		TOUCH_MOVE: "touchmove." + ns
+		TOUCH_END  : "touchend." + ns,
+		TOUCH_MOVE : "touchmove." + ns
 	},
 
 	// Classes
 	ClassName = {
 		image: ns + "-image",
 		inner: ns + "-inner",
-		on: ns + "-on",
-		off: ns + "-off"
+		on   : ns + "-on",
+		off  : ns + "-off"
 	},
 
 	// touch device?
@@ -63,10 +81,13 @@
 
 
 
-	// ===============================================================
-	// Global API
-	// ===============================================================
-	$.imageChanger = {};
+
+	/**
+	 * =========================================================
+	 * Global API
+	 * =========================================================
+	 */
+	$.imageChanger = $.imageChanger || {};
 
 	// Builtin Transitions
 	var Transition = $.imageChanger.transition = {
@@ -136,11 +157,11 @@
 		this.$off = null;
 
 		this.status = {
-			active: false,
+			active : false,
 			animate: false,
-			enable: false,
-			loaded: false,
-			error: false
+			enable : false,
+			loaded : false,
+			error  : false
 		};
 
 		this.touchTimer = false;
@@ -153,8 +174,8 @@
 	}
 
 	/**
-	 * 初期化
-	 * @param jqObj 
+	 * Initialize
+	 * @param jQueryObject 
 	 * @param object
 	 */
 	ImageChanger.prototype._initialize = function($elem, options){
@@ -174,20 +195,20 @@
 		this.imageTypes = $.type(options.imageTypes) === "string" ? options.imageTypes.split("|") : options.imageTypes;
 		this.imageTypes = "\\."+this.imageTypes.join("\|\\.");
 
-		// srcを取得
+		// acquisition of the src attribute
 		var src = "";
 		if( options.backgroundImage ){
-			src = this.$elem.css("background-image");
-			src = src !== "" ? src.match(/url\((\S+)\)/)[1] : "";
+			src = this.$elem.css("background-image") || "";
+			src = src.match(/url\((\S+)\)/) ? RegExp.$1 : "";
 			src = src.replace(/"/g, "");
 		}else{
 			src = this.$img.attr("src");
 		}
 
-		// srcが未指定の場合は未処理
+		// return false if the empty
 		if( isEmpty(src) ) return false;
 
-		// 既にOn画像の場合は、内部パラメータもOnに設定
+		// `startOn`
 		var on = this._hasSuffix(src);
 
 		if( on ){
@@ -211,7 +232,7 @@
 	};
 
 	/**
-	 * HTMLを構築
+	 * Build HTML elements
 	 * @return void
 	 */
 	ImageChanger.prototype._buildHtml = function(){
@@ -241,7 +262,7 @@
 			position = $elem.css("position");
 			position = position != "static" ? position : "relative";
 
-			// 元のHTMLを保持
+			// save original DOM
 			style.zIndex = 3;
 			$inner = $("<span>").addClass(ClassName.inner).css(style).html(contents);
 
@@ -310,14 +331,14 @@
 		this.$inner = $inner;
 		this.$image = $image;
 
-		// 初期がOn画像の場合
+		// In the case of active image at the start
 		if( this.status.active ){
 			this.$off.attr("src", this.off).css("opacity", 0);
 		}
 	};
 
 	/**
-	 * 構築したHTMLを削除
+	 * Remove HTML elements
 	 * @return void
 	 */
 	ImageChanger.prototype._unbuildHtml = function(){
@@ -343,7 +364,7 @@
 	};
 
 	/**
-	 * On画像のプリロードが完了
+	 * Handler of image load completion
 	 * @param eventObj
 	 * @return void
 	 */
@@ -361,7 +382,7 @@
 	};
 
 	/**
-	 * On画像のロードエラー
+	 * Handler of image load error
 	 * @param eventObj
 	 * @return void
 	 */
@@ -373,7 +394,7 @@
 	};
 
 	/**
-	 * イベントを設定
+	 * Set some events
 	 * @return void
 	 */
 	ImageChanger.prototype._bindEvents = function(){
@@ -392,7 +413,7 @@
 			}
 		}
 
-		// IE7以下で<a>タグのクリックが効かないバグ対策
+		// IE7 click bug fix
 		if( ltIe7 && _this.$parent.is("a") ){
 			_this.$parent
 				.css("cursor", "pointer")
@@ -411,7 +432,7 @@
 	};
 
 	/**
-	 * イベントを解除
+	 * Release some events
 	 * @return void
 	 */
 	ImageChanger.prototype._unbindEvents = function(){
@@ -477,7 +498,7 @@
 	};
 
 	/**
-	 * 画像切替が有効か判定
+	 * Switching of the image is determined whether or not valid
 	 * @return boolean
 	 */
 	ImageChanger.prototype._isChangeEnable = function(){
@@ -485,7 +506,7 @@
 	};
 
 	/**
-	 * thisを束縛してコールバックを実行
+	 * Execution of callback
 	 * @param string
 	 * @param function
 	 * @param [param1, param2, ...]
@@ -506,7 +527,7 @@
 	};
 
 	/**
-	 * srcの値にsuffixが付いているか判定
+	 * suffix exists ?
 	 * @param string
 	 * @return boolean
 	 */
@@ -515,7 +536,7 @@
 	};
 
 	/**
-	 * srcの値にsuffixを付与
+	 * Add suffix
 	 * @param string
 	 * @return boolean
 	 */
@@ -524,7 +545,7 @@
 	};
 
 	/**
-	 * srcの値からsuffixを削除
+	 * Remove suffix
 	 * @param string
 	 * @return boolean
 	 */
@@ -533,7 +554,7 @@
 	};
 
 	/**
-	 * アニメーションを実行
+	 * Start transition
 	 * @param string
 	 * @return boolean
 	 */
@@ -547,8 +568,8 @@
 	};
 
 	/**
-	 * アニメーションを取得
-	 * 指定が無ければ新規でtransition用オブジェクトを生成
+	 * Get transition
+	 * if empty create a new transition object
 	 * @return boolean
 	 */
 	ImageChanger.prototype._getTransition = function(){
@@ -569,7 +590,7 @@
 	};
 
 	/**
-	 * On, Off画像を切り替える
+	 * Switch the image
 	 * @param function
 	 * @return void
 	 */
@@ -582,7 +603,7 @@
 	};
 
 	/**
-	 * On画像に切り替え
+	 * To active image
 	 * @param function
 	 * @return void
 	 */
@@ -609,7 +630,7 @@
 	};
 
 	/**
-	 * Off画像に切り替え
+	 * To default image
 	 * @param function
 	 * @return void
 	 */
@@ -636,7 +657,7 @@
 	};
 
 	/**
-	 * 一時的に動作を無効化する
+	 * Temporarily disable this plugin
 	 * @return void
 	 */
 	ImageChanger.prototype.disable = function(){
@@ -644,7 +665,7 @@
 	};
 
 	/**
-	 * disableを解除
+	 * To enable
 	 * @return void
 	 */
 	ImageChanger.prototype.enable = function(){
@@ -652,7 +673,7 @@
 	};
 
 	/**
-	 * プラグインを全て解除
+	 * Destroy this plugin
 	 * @return void
 	 */
 	ImageChanger.prototype.destroy = function(){
@@ -687,7 +708,180 @@
 	}
 
 
-	// Run imageChanger
+
+	/**
+	 * =========================================================
+	 * Built in transitions
+	 * =========================================================
+	 */
+
+	// fade
+	$.imageChanger.registerTransition("fade", {
+		on: function(params, done){
+			this.$off
+				.stop()
+				.animate({
+					"opacity": params.opacity
+				}, params.duration, params.easing, done);
+		},
+		off: function(params, done){
+			this.$off
+				.stop()
+				.animate({
+					"opacity": 1
+				}, params.duration, params.easing, done);
+		},
+		destroy: function(){
+			this.$off.stop(true,true).css("opacity", "");
+		}
+	});
+
+
+	// wink
+	$.imageChanger.registerTransition("wink", {
+		defaults: {
+			duration: 150,
+			easing: "swing",
+			opacity: 0.4
+		},
+		on: function(params, done){
+			if( this.$off.is(":animated") ){
+				done.call();
+			}else{
+				this.$off
+					.stop()
+					.animate({
+						"opacity": params.opacity
+					}, params.duration, params.easing)
+					.animate({
+						"opacity": 1
+					}, params.duration, params.easing, done);
+			}
+		},
+		off: function(params, done){
+			params = params;
+			done.call();
+		},
+		destroy: function(){
+			this.$off.stop(true,true).css("opacity", "");
+		}
+	});
+
+
+	// slide
+	$.imageChanger.registerTransition("slide", {
+		defaults: {
+			duration: 150,
+			easing: "swing",
+			direction: "top",
+			display: "inline-block"
+		},
+		initialize: function(params){
+
+			var position = this.$elem.css("position") === "static" ? "relative" : this.$elem.css("position");
+
+			this.$elem.css({
+				"position": position,
+				"overflow": "hidden",
+				"display": params.display
+			});
+
+			var size = {
+				width: this.$elem.width(),
+				height: this.$elem.height()
+			};
+
+			switch( params.direction ){
+				case "top":
+					this.$off.css({"top": 0});
+					this.$on.css({"top": size.height});
+					break;
+				case "right":
+					this.$off.css({"left": 0});
+					this.$on.css({"left": -size.width});
+					break;
+				case "bottom":
+					this.$off.css({"top": 0});
+					this.$on.css({"top": -size.height});
+					break;
+				case "left":
+					this.$off.css({"left": 0});
+					this.$on.css({"left": size.width});
+					break;
+			}
+		},
+		on: function(params, done){
+			var size = {
+				width: this.$elem.width(),
+				height: this.$elem.height()
+			};
+
+			switch( params.direction ){
+				case "top":
+					this.$off.stop().animate({"top": -size.height}, params.duration, params.easing);
+					this.$on.stop().animate({"top": 0}, params.duration, params.easing, done);
+					break;
+				case "right":
+					this.$off.stop().animate({"left": size.width}, params.duration, params.easing);
+					this.$on.stop().animate({"left": 0}, params.duration, params.easing, done);
+					break;
+				case "bottom":
+					this.$off.stop().animate({"top": size.height}, params.duration, params.easing);
+					this.$on.stop().animate({"top": 0}, params.duration, params.easing, done);
+					break;
+				case "left":
+					this.$off.stop().animate({"left": -size.width}, params.duration, params.easing);
+					this.$on.stop().animate({"left": 0}, params.duration, params.easing, done);
+					break;
+			}
+		},
+		off: function(params, done){
+			var size = {
+				width: this.$elem.width(),
+				height: this.$elem.height()
+			};
+
+			switch( params.direction ){
+				case "top":
+					this.$off.stop().animate({"top": 0}, params.duration, params.easing);
+					this.$on.stop().animate({"top": size.height}, params.duration, params.easing, done);
+					break;
+				case "right":
+					this.$off.stop().animate({"left": 0}, params.duration, params.easing);
+					this.$on.stop().animate({"left": -size.width}, params.duration, params.easing, done);
+					break;
+				case "bottom":
+					this.$off.stop().animate({"top": 0}, params.duration, params.easing);
+					this.$on.stop().animate({"top": -size.height}, params.duration, params.easing, done);
+					break;
+				case "left":
+					this.$off.stop().animate({"left": 0}, params.duration, params.easing);
+					this.$on.stop().animate({"left": size.width}, params.duration, params.easing, done);
+					break;
+			}
+		},
+		destroy: function(){
+			var emptyPosition = {
+				"top": "",
+				"right": "",
+				"bottom": "",
+				"left": ""
+			};
+
+			this.$off.stop(true,true).css(emptyPosition);
+			this.$on.stop(true,true).css(emptyPosition);
+
+			this.$elem.css({
+				"position": "",
+				"overflow": "",
+				"display": ""
+			});
+		}
+	});
+
+
+
+	// Register imageChanger method for $.fn
 	$.fn.imageChanger = function(options){
 		return this.each(function(){
 			
@@ -696,6 +890,7 @@
 					val;
 
 			if( !$this.data("imageChanger") ){
+
 				// Parse custom data attributes.
 				$.each(optionKeys, function(i, d){
 					val = $this.data( $.camelCase(ns + "-" + d.toLowerCase()) );
@@ -711,4 +906,4 @@
 	};
 
 
-}(jQuery, window));
+}));
