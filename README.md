@@ -1,5 +1,5 @@
-jquery-image-changer
-====
+jquery-image-changer  [![Build Status](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger.svg?branch=dev)](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger)
+====================
 
 ![jquery-image-changer](http://webdesign-dackel.com/dev/imagechanger/images/plugin.png)
 
