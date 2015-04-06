@@ -228,7 +228,6 @@
 			.on("load", $.proxy(this._loadSuccess, this))
 			.on("error", $.proxy(this._loadError, this))
 			.attr("src", on ? this.off : this.on );
-
 	};
 
 	/**
@@ -513,8 +512,8 @@
 
 		// Fire Custom Event
 		var e = new $.Event(ns + "." + type);
-		// this.$elem.trigger(e, this);
-		this.$elem.trigger(e);
+		e.target = this.$elem;
+		this.$elem.trigger(e, this);
 
 		return v;
 	};

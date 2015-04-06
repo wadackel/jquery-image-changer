@@ -237,33 +237,28 @@ QUnit.test("should be value of the position is adjusted", function(assert){
 
 
 
-// IE8 not working :(
+
 QUnit.module("data API - toggle()", {
   beforeEach: commonBeforeEach
 });
 
 QUnit.test("should switching a image", function(assert){
   var _this = this,
-      done = assert.async(),
-      ic = _this.$el.imageChanger().data("imageChanger");
-
-  $("body").append("afterInit<br/>");
+      done = assert.async();
 
   _this.$el
-    .on("ic.afterInit", function(){
-      $("body").append("afterInit<br/>");
+    .on("ic.afterInit", function(e, ic){
       ic.toggle();
     })
-    .on("ic.afterOnImage", function(){
-      $("body").append("afterOnImage<br/>");
+    .on("ic.afterOnImage", function(e, ic){
       assert.ok(true, "after onImage event");
       ic.toggle();
     })
-    .on("ic.afterOffImage", function(){
-      $("body").append("afterOffImage<br/>");
+    .on("ic.afterOffImage", function(e, ic){
       assert.ok(true, "after offImage event");
       done();
-    });
+    })
+    .imageChanger();
 });
 
 
@@ -275,17 +270,17 @@ QUnit.module("data API - onImage()", {
 
 QUnit.test("to be switched to the active image", function(assert){
   var _this = this,
-      done = assert.async(),
-      ic = _this.$el.imageChanger().data("imageChanger");
+      done = assert.async();
 
   _this.$el
-    .on("ic.afterInit", function(){
+    .on("ic.afterInit", function(e, ic){
       ic.onImage();
     })
-    .on("ic.afterOnImage", function(){
+    .on("ic.afterOnImage", function(e, ic){
       assert.ok(true, "after onImage event");
       done();
-    });
+    })
+    .imageChanger();
 });
 
 
@@ -297,21 +292,19 @@ QUnit.module("data API - offImage()", {
 
 QUnit.test("to be switched to the default image", function(assert){
   var _this = this,
-      done = assert.async(),
-      ic = _this.$el
-        .find("img")
-          .attr("src", "images/btn_on.png")
-          .end()
-        .imageChanger().data("imageChanger");
+      done = assert.async();
+
+  _this.$el.find("img").attr("src", "images/btn_on.png");
 
   _this.$el
-    .on("ic.afterInit", function(){
+    .on("ic.afterInit", function(e, ic){
       ic.offImage();
     })
-    .on("ic.afterOffImage", function(){
+    .on("ic.afterOffImage", function(e, ic){
       assert.ok(true, "after offImage event");
       done();
-    });
+    })
+    .imageChanger();
 });
 
 
@@ -323,11 +316,10 @@ QUnit.module("data API - disable() / enable()", {
 
 QUnit.test("should enable and disable switches", function(assert){
   var _this = this,
-      done = assert.async(),
-      ic = _this.$el.imageChanger().data("imageChanger");
+      done = assert.async();
 
   _this.$el
-    .on("ic.afterInit", function(){
+    .on("ic.afterInit", function(e, ic){
       assert.strictEqual( ic.isChangeEnable(), true );
       ic.disable();
       assert.strictEqual( ic.isChangeEnable(), false );
@@ -335,7 +327,8 @@ QUnit.test("should enable and disable switches", function(assert){
       assert.strictEqual( ic.isChangeEnable(), true );
 
       done();
-    });
+    })
+    .imageChanger();
 });
 
 
