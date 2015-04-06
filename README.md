@@ -327,6 +327,12 @@ $(selector).imageChanger({
 * **[2015.01.04]** First release.
 
 
+## TODO
+* Switching of multiple image.
+* Provide global API. (Example: `$.imageChanger("toggle", $(selector))`)
+
+
+
 ## Licence
 Released under the [MIT Licence](https://github.com/tsuyoshiwada/jQuery.imageChanger/blob/master/LICENCE)
 
