@@ -1,0 +1,23 @@
+{
+  "name": "jquery-image-changer",
+  "version": "2.0.3",
+  "homepage": "https://github.com/tsuyoshiwada/jQuery.imageChanger",
+  "authors": [
+    "tsuyoshiwada <v23.b.wada@gmail.com>"
+  ],
+  "description": "Simple jQuery plug-in that the switching of the image with the animation.",
+  "main": "dist/jquery.imageChanger.js",
+  "keywords": [
+    "jQuery",
+    "image",
+    "animation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,7 +1,8 @@
 jquery-image-changer  [![Build Status](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger.svg?branch=dev)](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger)
 ====================
 
-![jquery-image-changer](http://webdesign-dackel.com/dev/imagechanger/images/plugin.png)
+![jquery-image-changer](https://raw.githubusercontent.com/tsuyoshiwada/jQuery.imageChanger/images/plugin.png)
+
 
 Simple jQuery plug-in that the switching of the image with the animation.
 
@@ -12,7 +13,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 
 ## Demo
 
-[demo](http://example.com)
+[demo](http://tsuyoshiwada.github.io/jQuery.imageChanger/)
 
 
 ## Features
