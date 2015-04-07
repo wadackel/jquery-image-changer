@@ -239,25 +239,30 @@
           width: $elem.width(),
           height: $elem.height()
         },
-        position,
-        style = {
-          position: "absolute",
-          zIndex: 1,
-          top: 0,
-          left: 0,
-          display: "inline-block",
-          width: size.width,
-          height: size.height
-        };
+        position;
 
-    // background image
+
+    // for background image
     if( this.options.backgroundImage === true ){
+      var style = {
+        position: "absolute",
+        zIndex: 1,
+        top: 0,
+        left: 0,
+        display: "inline-block",
+        width: size.width,
+        height: size.height
+      };
+
       position = $elem.css("position");
       position = position != "static" ? position : "relative";
 
       // save original DOM
       style.zIndex = 3;
       $inner = $("<span>").addClass(ClassName.inner).css(style).html(contents);
+
+      // fix Firefox bugs
+      style.boxShadow = "0 0 1px rgba(0,0,0,.01)";
 
       // off image
       style.zIndex = 2;
@@ -279,40 +284,45 @@
         .append($off)
         .append($on);
 
+
+    // for <img>
     }else{
+      var styleOn = {
+            position: "absolute",
+            zIndex: 1,
+            boxShadow: "0 0 1px rgba(0,0,0,.01)" // fix Firefox bugs
+          },
+          styleOff = {
+            boxShadow: "0 0 1px rgba(0,0,0,.01)" // fix Firefox bugs
+          };
+
       // off image
       $off = this.$img;
-
       position = $off.css("position");
 
       // on image
-      $on = $($("<div>").append($off.clone()).html()); // ie7 jQuery.clone() bug fix
-      $on
+      $on = $( $("<div>").append($off.clone()).html() ) // ie7 jQuery.clone() bug fix
         .addClass(ClassName.on)
-        .attr("src", this.on)
-        .css({
-          "position": "absolute",
-          "z-index": 1
-        });
+        .attr("src", this.on);
 
       // wrap
       $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline; /zoom:1;"></span>');
       $image = this.$elem.find(ClassName.image);
 
       if( position === "static" ){
-        $off.css("position", "relative");
-        $on.css({
-          "top": 0,
-          "left": 0
-        });
+        styleOff.position = "relative";
+        styleOn.top = 0;
+        styleOn.left = 0;
+
       }else{
-        $on.css({
-          "top": $off.css("top"),
-          "right": $off.css("right"),
-          "bottom": $off.css("bottom"),
-          "left": $off.css("left")
-        });
+        styleOn.top = $off.css("top");
+        styleOn.right = $off.css("right");
+        styleOn.bottom = $off.css("bottom");
+        styleOn.left = $off.css("left");
       }
+
+      $on.css(styleOn);
+      $off.css(styleOff);
 
       // append
       $off.css("z-index", 2).addClass(ClassName.off);

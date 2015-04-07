@@ -109,6 +109,8 @@ Specifies the transition.
 **Default: fade**  
 **Type: `object`**
 
+![fade transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/fade.gif)
+
 ```javascript
 $(selector).imageChanger({
 	transition: {
@@ -120,6 +122,8 @@ $(selector).imageChanger({
 });
 ```
 
+![none transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/none.gif)
+
 **not animations:**
 
 ```javascript
@@ -127,6 +131,8 @@ $(selector).imageChanger({
 	transition: false
 });
 ```
+
+![wink transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/wink.gif)
 
 **wink:**
 
@@ -142,6 +148,8 @@ $(selector).imageChanger({
 ```
 
 **slide:**
+
+![slide transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/slide.gif)
 
 ```javascript
 $(selector).imageChanger({

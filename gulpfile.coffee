@@ -13,6 +13,7 @@ banner = """
  * license: <%= pkg.license %>
  * copyright: <%= pkg.author %>
  */
+
 """
 
 gulp.task "scripts", ->
