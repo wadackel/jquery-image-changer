@@ -1,4 +1,4 @@
-jquery-image-changer  [![Build Status](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger.svg?branch=dev)](https://travis-ci.org/tsuyoshiwada/jQuery.imageChanger)
+jquery-image-changer  [![Build Status](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
 ====================
 
 ![jquery-image-changer](https://raw.githubusercontent.com/tsuyoshiwada/jQuery.imageChanger/images/plugin.png)
