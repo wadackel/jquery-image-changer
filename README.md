@@ -13,7 +13,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 
 ## Demo
 
-[demo](http://tsuyoshiwada.github.io/jQuery.imageChanger/)
+[demo](http://tsuyoshiwada.github.io/jquery-image-changer/)
 
 
 ## Features
@@ -51,7 +51,7 @@ $ bower install jquery-image-changer
 
 ```html
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="jquery.imagechanger.min.js"></script>
+<script type="text/javascript" src="jquery.image-changer.min.js"></script>
 ```
 
 ### Set up HTML
@@ -166,7 +166,7 @@ Specifies the extension of the corresponding image.
 **Type: `string | array`**
 
 
-## Custom data attributes
+## Data attributes
 You can specify the options for each element after the `data-ic`.
 
 ### Example
@@ -184,7 +184,7 @@ You will receive an event using the `jQuery#on()`.
 ```javascript
 var $rollover = $(selector);
 
-$rollover.on("ic.****", function(){
+$rollover.on("ic.****", function(e, ic){
 	// do something...
 });
 ```
@@ -206,12 +206,12 @@ To use `ImageChanger` $.fn.data use delegate function.
 ```javascript
 var ic = $(selector).imageChanger().data("imageChanger");
 
-ic.toggle(); //Toggle the image
-ic.onImage(); //To active image
+ic.toggle();   //Toggle the image
+ic.onImage();  //To active image
 ic.offImage(); //To default image
-ic.disable(); //Temporarily disable this plugin
-ic.enable(); //To enable
-ic.destroy(); //Destroy this plugin
+ic.disable();  //Temporarily disable this plugin
+ic.enable();   //To enable
+ic.destroy();  //Destroy this plugin
 ```
 
 
@@ -224,6 +224,9 @@ ic.destroy(); //Destroy this plugin
 * **`destroy()`** - Implementation for returning to the default. (Called when `ImageChanger#destroy()`)
 
 Please execute the callback function that comes in when you are finished animation argument.
+
+
+**Example `type:"custom"`**
 
 ```javascript
 $(selector).imageChanger({
@@ -275,7 +278,7 @@ In addition, it can be registered as a builtin transition.
 To do the registration you can use the `$.imageChanger.registerTransition()`.
 
 
-### Example
+**Example `$.imageChanger#registerTransition()`**
 
 ```javascript
 // Register Custom Transition.
@@ -322,7 +325,7 @@ $(selector).imageChanger({
 
 
 ## Change Log
-* **[2015.04.05]** Support `bower` and `npm` install.
+* **[2015.04.05]** Support `bower` and `npm` install. And some bug fixes.
 * **[2015.01.31]** Fix IE7 `slide` transition bugs.
 * **[2015.01.27]** Support the option specified in the custom data attributes.
 * **[2015.01.04]** First release.

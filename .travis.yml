@@ -3,6 +3,9 @@ branches:
     - master
     - dev
 
+notifications:
+  email: false
+
 language: node_js
 
 node_js:

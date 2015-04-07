@@ -16,7 +16,7 @@ banner = """
 """
 
 gulp.task "scripts", ->
-  gulp.src "src/jquery.imageChanger.js"
+  gulp.src "src/jquery.image-changer.js"
   .pipe $.plumber()
   .pipe $.jshint()
   .pipe $.header banner, pkg: $.pkg
