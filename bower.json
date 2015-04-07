@@ -16,8 +16,15 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
+    ".DS_Store",
+    ".gitignore",
+    ".jshintrc",
+    ".travis.yml",
     "node_modules",
     "bower_components",
+    "package.json",
+    "gulpfile.coffee",
+    "src",
     "test",
     "tests"
   ]
