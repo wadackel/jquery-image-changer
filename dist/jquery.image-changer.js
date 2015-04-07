@@ -1,7 +1,7 @@
 /*!
  * jquery-image-changer
  * author: tsuyoshiwada
- * version: 2.0.3
+ * version: 2.0.4
  * license: MIT
  * copyright: tsuyoshiwada
  */
@@ -25,7 +25,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.3",
+  var version = "2.0.4",
 
   // Default Options
   defaults = {

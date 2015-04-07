@@ -8,7 +8,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 
 
 ## Version
-2.0.3
+2.0.4
 
 
 ## Demo
