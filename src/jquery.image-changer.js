@@ -18,7 +18,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.3",
+  var version = "2.0.4",
 
   // Default Options
   defaults = {
@@ -97,14 +97,17 @@
     },
     initialize: function(params){
       params = params;
+      this.$on.css("opacity", 0);
     },
     on: function(params, done){
       params = params;
+      this.$on.css("opacity", 1);
       this.$off.css("opacity", 0);
       done.call();
     },
     off: function(params, done){
       params = params;
+      this.$on.css("opacity", 0);
       this.$off.css("opacity", 1);
       done.call();
     },
@@ -711,11 +714,20 @@
 
   // fade
   $.imageChanger.registerTransition("fade", {
+    initialize: function(params){
+      this.$on.css("opacity", 0);
+    },
     on: function(params, done){
       this.$off
         .stop()
         .animate({
           "opacity": params.opacity
+        }, params.duration, params.easing);
+
+      this.$on
+        .stop()
+        .animate({
+          "opacity": 1
         }, params.duration, params.easing, done);
     },
     off: function(params, done){
@@ -723,10 +735,17 @@
         .stop()
         .animate({
           "opacity": 1
+        }, params.duration, params.easing);
+
+      this.$on
+        .stop()
+        .animate({
+          "opacity": 0
         }, params.duration, params.easing, done);
     },
     destroy: function(){
       this.$off.stop(true,true).css("opacity", "");
+      this.$on.stop(true,true).css("opacity", "");
     }
   });
 
@@ -738,10 +757,22 @@
       easing: "swing",
       opacity: 0.4
     },
+    initialize: function(params){
+      this.$on.css("opacity", 0);
+    },
     on: function(params, done){
       if( this.$off.is(":animated") ){
         done.call();
       }else{
+        this.$on
+          .stop()
+          .animate({
+            "opacity": 1
+          }, params.duration, params.easing)
+          .animate({
+            "opacity": 0
+          }, params.duration, params.easing);
+
         this.$off
           .stop()
           .animate({
@@ -757,6 +788,7 @@
       done.call();
     },
     destroy: function(){
+      this.$on.stop(true,true).css("opacity", "");
       this.$off.stop(true,true).css("opacity", "");
     }
   });
