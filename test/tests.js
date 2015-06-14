@@ -238,32 +238,6 @@ QUnit.test("should be value of the position is adjusted", function(assert){
 
 
 
-QUnit.module("data API - toggle()", {
-  beforeEach: commonBeforeEach
-});
-
-QUnit.test("should switching a image", function(assert){
-  var _this = this,
-      done = assert.async();
-
-  _this.$el
-    .on("ic.afterInit", function(e, ic){
-      ic.toggle();
-    })
-    .on("ic.afterOnImage", function(e, ic){
-      assert.ok(true, "after onImage event");
-      ic.toggle();
-    })
-    .on("ic.afterOffImage", function(e, ic){
-      assert.ok(true, "after offImage event");
-      done();
-    })
-    .imageChanger();
-});
-
-
-
-
 QUnit.module("data API - onImage()", {
   beforeEach: commonBeforeEach
 });
@@ -299,6 +273,32 @@ QUnit.test("to be switched to the default image", function(assert){
   _this.$el
     .on("ic.afterInit", function(e, ic){
       ic.offImage();
+    })
+    .on("ic.afterOffImage", function(e, ic){
+      assert.ok(true, "after offImage event");
+      done();
+    })
+    .imageChanger();
+});
+
+
+
+
+QUnit.module("data API - toggle()", {
+  beforeEach: commonBeforeEach
+});
+
+QUnit.test("should switching a image", function(assert){
+  var _this = this,
+      done = assert.async();
+
+  _this.$el
+    .on("ic.afterInit", function(e, ic){
+      ic.toggle();
+    })
+    .on("ic.afterOnImage", function(e, ic){
+      assert.ok(true, "after onImage event");
+      ic.toggle();
     })
     .on("ic.afterOffImage", function(e, ic){
       assert.ok(true, "after offImage event");

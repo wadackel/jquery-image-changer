@@ -1,11 +1,11 @@
 {
   "name": "jquery-image-changer",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "main": "dist/jquery.image-changer.js",
   "scripts": {
     "test": "gulp test"
   },
-  "description": "画像切り替えを行う為のjQueryプラグイン。",
+  "description": "Simple jQuery plug-in that the switching of the image with the animation.",
   "repository": {
     "type": "git",
     "url": "https://github.com/tsuyoshiwada/jquery-image-changer.git"
@@ -19,6 +19,9 @@
   "author": "tsuyoshiwada",
   "license": "MIT",
   "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  },
   "devDependencies": {
     "coffee-script": "^1.9.1",
     "del": "^1.1.1",

@@ -1,10 +1,10 @@
 /*!
  * jquery-image-changer
  * author: tsuyoshiwada
- * version: 2.0.4
+ * version: 2.0.5
  * license: MIT
  * copyright: tsuyoshiwada
- */;(function(root, factory){
+ */ ;(function(root, factory){
   "use strict";
 
   // CommonJS module.
@@ -24,7 +24,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.4",
+  var version = "2.0.5",
 
   // Default Options
   defaults = {
@@ -305,7 +305,7 @@
         });
 
       // wrap
-      $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline; /zoom:1;"></span>');
+      $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline;"></span>');
       $image = this.$elem.find(ClassName.image);
 
       if( position === "static" ){
@@ -414,23 +414,6 @@
           .on(MouseEvent.ROLL_OUT, $.proxy(_this._onRollOutHandler, _this));
       }
     }
-
-    // IE7 click bug fix
-    if( ltIe7 && _this.$parent.is("a") ){
-      _this.$parent
-        .css("cursor", "pointer")
-        .on(MouseEvent.CLICK, function(e){
-          e.preventDefault();
-          var href = $(this).attr("href"),
-              target = $(this).attr("target");
-          if( target === "_blank" ){
-            window.open(href, target);
-          }else{
-            location.href = href;
-          }
-        });
-    }
-
   };
 
   /**
@@ -449,12 +432,6 @@
           .off(MouseEvent.ROLL_OVER)
           .off(MouseEvent.ROLL_OUT);
       }
-    }
-
-    if( ltIe7 && this.$parent.is("a") ){
-      this.$parent
-        .css("cursor", "")
-        .off(MouseEvent.CLICK);
     }
   };
 
@@ -724,29 +701,25 @@
       this.$on.css("opacity", 0);
     },
     on: function(params, done){
+      this.$on.css("opacity", 1);
+      
       this.$off
         .stop()
         .animate({
           "opacity": params.opacity
-        }, params.duration, params.easing);
-
+        }, params.duration, params.easing, done);
+    },
+    off: function(params, done){
       this.$on
         .stop()
         .animate({
           "opacity": 1
-        }, params.duration, params.easing, done);
-    },
-    off: function(params, done){
+        }, params.duration / 2, params.easing);
+
       this.$off
         .stop()
         .animate({
           "opacity": 1
-        }, params.duration, params.easing);
-
-      this.$on
-        .stop()
-        .animate({
-          "opacity": 0
         }, params.duration, params.easing, done);
     },
     destroy: function(){
