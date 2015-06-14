@@ -1,6 +1,6 @@
 {
   "name": "jquery-image-changer",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "main": "dist/jquery.image-changer.js",
   "scripts": {
     "test": "gulp test"
@@ -19,6 +19,9 @@
   "author": "tsuyoshiwada",
   "license": "MIT",
   "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  },
   "devDependencies": {
     "coffee-script": "^1.9.1",
     "del": "^1.1.1",

@@ -1,4 +1,4 @@
-;(function(root, factory){
+ ;(function(root, factory){
   "use strict";
 
   // CommonJS module.
@@ -18,7 +18,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.4",
+  var version = "2.0.5",
 
   // Default Options
   defaults = {
@@ -97,14 +97,17 @@
     },
     initialize: function(params){
       params = params;
+      this.$on.css("opacity", 0);
     },
     on: function(params, done){
       params = params;
+      this.$on.css("opacity", 1);
       this.$off.css("opacity", 0);
       done.call();
     },
     off: function(params, done){
       params = params;
+      this.$on.css("opacity", 0);
       this.$off.css("opacity", 1);
       done.call();
     },
@@ -306,7 +309,7 @@
         .attr("src", this.on);
 
       // wrap
-      $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline; /zoom:1;"></span>');
+      $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline;"></span>');
       $image = this.$elem.find(ClassName.image);
 
       if( position === "static" ){
@@ -415,23 +418,6 @@
           .on(MouseEvent.ROLL_OUT, $.proxy(_this._onRollOutHandler, _this));
       }
     }
-
-    // IE7 click bug fix
-    if( ltIe7 && _this.$parent.is("a") ){
-      _this.$parent
-        .css("cursor", "pointer")
-        .on(MouseEvent.CLICK, function(e){
-          e.preventDefault();
-          var href = $(this).attr("href"),
-              target = $(this).attr("target");
-          if( target === "_blank" ){
-            window.open(href, target);
-          }else{
-            location.href = href;
-          }
-        });
-    }
-
   };
 
   /**
@@ -450,12 +436,6 @@
           .off(MouseEvent.ROLL_OVER)
           .off(MouseEvent.ROLL_OUT);
       }
-    }
-
-    if( ltIe7 && this.$parent.is("a") ){
-      this.$parent
-        .css("cursor", "")
-        .off(MouseEvent.CLICK);
     }
   };
 
@@ -721,7 +701,12 @@
 
   // fade
   $.imageChanger.registerTransition("fade", {
+    initialize: function(params){
+      this.$on.css("opacity", 0);
+    },
     on: function(params, done){
+      this.$on.css("opacity", 1);
+      
       this.$off
         .stop()
         .animate({
@@ -729,6 +714,12 @@
         }, params.duration, params.easing, done);
     },
     off: function(params, done){
+      this.$on
+        .stop()
+        .animate({
+          "opacity": 1
+        }, params.duration / 2, params.easing);
+
       this.$off
         .stop()
         .animate({
@@ -737,6 +728,7 @@
     },
     destroy: function(){
       this.$off.stop(true,true).css("opacity", "");
+      this.$on.stop(true,true).css("opacity", "");
     }
   });
 
@@ -748,10 +740,22 @@
       easing: "swing",
       opacity: 0.4
     },
+    initialize: function(params){
+      this.$on.css("opacity", 0);
+    },
     on: function(params, done){
       if( this.$off.is(":animated") ){
         done.call();
       }else{
+        this.$on
+          .stop()
+          .animate({
+            "opacity": 1
+          }, params.duration, params.easing)
+          .animate({
+            "opacity": 0
+          }, params.duration, params.easing);
+
         this.$off
           .stop()
           .animate({
@@ -767,6 +771,7 @@
       done.call();
     },
     destroy: function(){
+      this.$on.stop(true,true).css("opacity", "");
       this.$off.stop(true,true).css("opacity", "");
     }
   });

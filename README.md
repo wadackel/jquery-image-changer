@@ -1,14 +1,13 @@
-jquery-image-changer  [![Build Status](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
+jquery-image-changer 
 ====================
+
+[![npm version](https://badge.fury.io/js/jquery-image-changer.svg)](http://badge.fury.io/js/jquery-image-changer)
+[![Build Status](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
 
 ![jquery-image-changer](https://raw.githubusercontent.com/tsuyoshiwada/jQuery.imageChanger/images/plugin.png)
 
 
 Simple jQuery plug-in that the switching of the image with the animation.
-
-
-## Version
-2.0.4
 
 
 ## Demo
@@ -47,7 +46,7 @@ $ bower install jquery-image-changer
 
 ## Usage
 
-### Load jQuery and jquery.imageChanger.js
+### Load jQuery and jquery.image-changer.js
 
 ```html
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -332,7 +331,22 @@ $(selector).imageChanger({
 * Android2.3 +
 
 
+## Notes
+### If lower than Firefox version 35.0
+Bug occurs during the animation.  
+It can be solved by adding the following CSS.
+
+```css
+.ic-on,
+.ic-off {
+  box-shadow:0 0 1px rgba(255, 255, 255, .01);
+  background-color:rgba(255, 255, 255, 1);
+}
+```
+
+
 ## Change Log
+* **[2015.06.15]** Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
 * **[2015.04.05]** Support `bower` and `npm` install. And some bug fixes.
 * **[2015.01.31]** Fix IE7 `slide` transition bugs.
 * **[2015.01.27]** Support the option specified in the custom data attributes.
