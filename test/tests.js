@@ -1,16 +1,35 @@
 // for PhantomJS
 var isTouch = "ontouchstart" in window;
-var html = [
-  '<a class="rollover" href="index.html">',
-    '<img src="images/btn.png" alt="Button" />',
-  '</a>'
-].join("\n");
-
 
 
 function commonBeforeEach(){
-  this.$fixture = $("#qunit-fixture").append( html );
+  this.$fixture = $("#qunit-fixture").append([
+    '<a class="rollover" href="index.html">',
+      '<img src="images/btn.png" alt="Button" />',
+    '</a>'
+  ].join("\n"));
   this.$el = $(".rollover", this.$fixture);
+}
+
+function globalApiBeforeEach(){
+  this.$fixture = $("#qunit-fixture").append([
+    '<a class="rollover" id="rollover-1" href="index.html">',
+      '<img src="images/btn_1.png" alt="Button" />',
+    '</a>',
+
+    '<a class="rollover" id="rollover-2" href="index.html">',
+      '<img src="images/btn_2.png" alt="Button" />',
+    '</a>',
+
+    '<a class="rollover" id="rollover-3" href="index.html">',
+      '<img src="images/btn_3.jpg" alt="Button" />',
+    '</a>'
+  ].join("\n"));
+
+  this.$el = $(".rollover", this.$fixture);
+  this.$rollover1 = $("#rollover-1", this.$fixture);
+  this.$rollover2 = $("#rollover-2", this.$fixture);
+  this.$rollover3 = $("#rollover-3", this.$fixture);
 }
 
 function convertAbsUrl(relativePath){
@@ -18,6 +37,133 @@ function convertAbsUrl(relativePath){
   img.src = relativePath;
   return img.src;
 }
+
+
+
+QUnit.module("Global API - addSuffix", {
+  beforeEach: globalApiBeforeEach
+});
+
+QUnit.test("should suffix is added", function(assert){
+  // basic
+  assert.strictEqual($.imageChanger("addSuffix", "./path/img.jpg"), "./path/img_on.jpg", "added `_on`");
+  assert.strictEqual($.imageChanger("addSuffix", "./path/img_on.jpg"), "./path/img_on.jpg", "no change");
+
+  // basic + suffix
+  assert.strictEqual($.imageChanger("addSuffix", "./path/img.jpg", "_active"), "./path/img_active.jpg", "added `_active`");
+  assert.strictEqual($.imageChanger("addSuffix", "./path/img_active.jpg", "_active"), "./path/img_active.jpg", "no change");
+});
+
+QUnit.test("should `_on` is added to all of the images", function(assert){
+  var results = $.imageChanger("addSuffix", this.$el);
+  assert.deepEqual(results, [
+    "images/btn_1_on.png",
+    "images/btn_2_on.png",
+    "images/btn_3_on.jpg"
+  ]);
+});
+
+QUnit.test("should `_active` is added to all of the images", function(assert){
+  var results = $.imageChanger("addSuffix", this.$el, "_active");
+  assert.deepEqual(results, [
+    "images/btn_1_active.png",
+    "images/btn_2_active.png",
+    "images/btn_3_active.jpg"
+  ]);
+});
+
+
+
+QUnit.module("Global API - removeSuffix", {
+  beforeEach: globalApiBeforeEach
+});
+
+QUnit.test("should suffix is removed", function(assert){
+  // basic
+  assert.strictEqual($.imageChanger("removeSuffix", "./path/img.jpg"), "./path/img.jpg", "no change");
+  assert.strictEqual($.imageChanger("removeSuffix", "./path/img_on.jpg"), "./path/img.jpg", "removed `_on`");
+
+  // basic + suffix
+  assert.strictEqual($.imageChanger("removeSuffix", "./path/img.jpg", "_active"), "./path/img.jpg", "no change");
+  assert.strictEqual($.imageChanger("removeSuffix", "./path/img_active.jpg", "_active"), "./path/img.jpg", "removed `_active`");
+});
+
+QUnit.test("should `_on` is removed to all of the images", function(assert){
+  $.imageChanger("addSuffix", this.$el);
+  var results = $.imageChanger("removeSuffix", this.$el);
+  assert.deepEqual(results, [
+    "images/btn_1.png",
+    "images/btn_2.png",
+    "images/btn_3.jpg"
+  ]);
+});
+
+QUnit.test("should `_active` is removed to all of the images", function(assert){
+  $.imageChanger("addSuffix", this.$el, "_active");
+  var results = $.imageChanger("removeSuffix", this.$el, "_active");
+  assert.deepEqual(results, [
+    "images/btn_1.png",
+    "images/btn_2.png",
+    "images/btn_3.jpg"
+  ]);
+});
+
+
+
+QUnit.module("Global API - toggleSuffix", {
+  beforeEach: globalApiBeforeEach
+});
+
+QUnit.test("should suffix is toggled", function(assert){
+  // basic
+  assert.strictEqual($.imageChanger("toggleSuffix", "./path/img.jpg"), "./path/img_on.jpg", "added `_on`");
+  assert.strictEqual($.imageChanger("toggleSuffix", "./path/img_on.jpg"), "./path/img.jpg", "removed `_on`");
+
+  // basic + suffix
+  assert.strictEqual($.imageChanger("toggleSuffix", "./path/img.jpg", "_active"), "./path/img_active.jpg", "added `_active`");
+  assert.strictEqual($.imageChanger("toggleSuffix", "./path/img_active.jpg", "_active"), "./path/img.jpg", "removed `_active`");
+});
+
+QUnit.test("should `_on` is toggled to all of the images", function(assert){
+  var results;
+
+  $.imageChanger("addSuffix", this.$rollover2);
+
+  results = $.imageChanger("toggleSuffix", this.$el);
+  assert.deepEqual(results, [
+    "images/btn_1_on.png",
+    "images/btn_2.png",
+    "images/btn_3_on.jpg"
+  ]);
+
+  results = $.imageChanger("toggleSuffix", this.$el);
+  assert.deepEqual(results, [
+    "images/btn_1.png",
+    "images/btn_2_on.png",
+    "images/btn_3.jpg"
+  ]);
+});
+
+QUnit.test("should `_active` is toggled to all of the images", function(assert){
+  var results;
+
+  $.imageChanger("addSuffix", this.$rollover1, "_active");
+  $.imageChanger("addSuffix", this.$rollover3, "_active");
+
+  results = $.imageChanger("toggleSuffix", this.$el, "_active");
+  assert.deepEqual(results, [
+    "images/btn_1.png",
+    "images/btn_2_active.png",
+    "images/btn_3.jpg"
+  ]);
+
+  results = $.imageChanger("toggleSuffix", this.$el, "_active");
+  assert.deepEqual(results, [
+    "images/btn_1_active.png",
+    "images/btn_2.png",
+    "images/btn_3_active.jpg"
+  ]);
+});
 
 
 

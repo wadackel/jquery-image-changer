@@ -18,7 +18,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.5",
+  var version = "2.0.6",
 
   // Default Options
   defaults = {
@@ -60,7 +60,7 @@
   },
 
   // Classes
-  ClassName = {
+  ClassSet = {
     image: ns + "-image",
     inner: ns + "-inner",
     on   : ns + "-on",
@@ -78,96 +78,113 @@
 
   /**
    * =========================================================
-   * Global API
+   * Utilities
    * =========================================================
    */
-  $.imageChanger = $.imageChanger || {};
+  function sliceArray(array, start, end){
+    return Array.prototype.slice.call(array, start, end !== undefined ? end : array.length);
+  }
 
-  // Builtin Transitions
-  var Transition = $.imageChanger.transition = {
-    builtin: {}
-  };
+  function isEmpty(val){
+    return !val || val === "" || val === 0;
+  }
+  
+  function hasProp(obj, key){
+    return obj != null && Object.prototype.hasOwnProperty.call(obj, key);
+  }
 
-  // transition base
-  Transition.base = {
-    defaults: {
-      duration: 150,
-      easing: "linear",
-      opacity: 0
-    },
-    initialize: function(params){
-      params = params;
-      this.$on.css("opacity", 0);
-    },
-    on: function(params, done){
-      params = params;
-      this.$on.css("opacity", 1);
-      this.$off.css("opacity", 0);
-      done.call();
-    },
-    off: function(params, done){
-      params = params;
-      this.$on.css("opacity", 0);
-      this.$off.css("opacity", 1);
-      done.call();
-    },
-    destroy: function(){
+  function pregQuote(str, delimiter){
+    return String(str).replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
+  }
+
+  function imageTypesToRegex(imageTypes){
+    var reg = $.type(imageTypes) === "string" ? imageTypes.split("|") : imageTypes.concat();
+    return "\\." + reg.join("\|\\.");
+  }
+
+
+
+
+
+  /**
+   * =========================================================
+   * Transition
+   * =========================================================
+   */
+  var Transition = {
+    // Builtin Transitions
+    builtin: {},
+
+    // transition base
+    base: {
+      defaults: {
+        duration: 150,
+        easing: "linear",
+        opacity: 0
+      },
+      initialize: function(params){
+        params = params;
+        this.$on.css("opacity", 0);
+      },
+      on: function(params, done){
+        params = params;
+        this.$on.css("opacity", 1);
+        this.$off.css("opacity", 0);
+        done.call();
+      },
+      off: function(params, done){
+        params = params;
+        this.$on.css("opacity", 0);
+        this.$off.css("opacity", 1);
+        done.call();
+      },
+      destroy: function(){
+      }
     }
   };
 
-  /**
-   * register built-in transition.
-   * @param string
-   * @param object
-   * @return void
-   */
-  $.imageChanger.registerTransition = function(name, transition){
-    Transition.builtin[name] = $.extend({}, Transition.base, transition);
-  };
+
+
 
   /**
-   * unregister built-in transition
-   * @param string
-   * @return void
+   * =========================================================
+   * ImageChanger
+   * =========================================================
    */
-  $.imageChanger.unregisterTransition = function(name){
-    delete Transition.builtin[name];
-  };
-
-
-
-
-
-  // ===============================================================
-  // Instance
-  // ===============================================================
   function ImageChanger(){
-    this.version = version;
-    this.options = null;
-    this.transition = null;
-    this.imageTypes = "";
+    // Call Global API
+    if( $.type(arguments[0]) === "string" ){
+      return ImageChanger.callAPI.apply(this, arguments);
 
-    this.$elem = null;
-    this.$img = null;
-    this.$parant = null;
-    this.$on = null;
-    this.$off = null;
+    // Generation of instance
+    }else{
+      this.version = version;
+      this.options = null;
+      this.transition = null;
+      this.imageTypes = "";
 
-    this.status = {
-      active : false,
-      animate: false,
-      enable : false,
-      loaded : false,
-      error  : false
-    };
+      this.$elem = null;
+      this.$img = null;
+      this.$parant = null;
+      this.$on = null;
+      this.$off = null;
 
-    this.touchTimer = false;
+      this.status = {
+        active : false,
+        animate: false,
+        enable : false,
+        loaded : false,
+        error  : false
+      };
 
-    this.on = "";
-    this.off = "";
+      this.touchTimer = false;
 
-    // Initialize
-    this._initialize.apply(this, arguments);
+      this.on = "";
+      this.off = "";
+
+      // Initialize
+      this._initialize.apply(this, arguments);
+    }
   }
 
   /**
@@ -188,9 +205,7 @@
     this.$img = $elem.find("img");
     this.$parent = this.$img.parent();
     this.transition = this._getTransition();
-
-    this.imageTypes = $.type(options.imageTypes) === "string" ? options.imageTypes.split("|") : options.imageTypes;
-    this.imageTypes = "\\."+this.imageTypes.join("\|\\.");
+    this.imageTypes = imageTypesToRegex(options.imageTypes);
 
     // acquisition of the src attribute
     var src = "";
@@ -262,20 +277,17 @@
 
       // save original DOM
       style.zIndex = 3;
-      $inner = $("<span>").addClass(ClassName.inner).css(style).html(contents);
-
-      // fix Firefox bugs
-      style.boxShadow = "0 0 1px rgba(0,0,0,.01)";
+      $inner = $("<span>").addClass(ClassSet.inner).css(style).html(contents);
 
       // off image
       style.zIndex = 2;
       style.backgroundImage = "url("+this.off+")";
-      $off = $("<span>").addClass(ClassName.off).css(style);
+      $off = $("<span>").addClass(ClassSet.off).css(style);
 
       // on image
       style.zIndex = 1;
       style.backgroundImage = "url("+this.on+")";
-      $on = $("<span>").addClass(ClassName.on).css(style);
+      $on = $("<span>").addClass(ClassSet.on).css(style);
 
       // append
       $elem
@@ -292,12 +304,9 @@
     }else{
       var styleOn = {
             position: "absolute",
-            zIndex: 1,
-            boxShadow: "0 0 1px rgba(0,0,0,.01)" // fix Firefox bugs
+            zIndex: 1
           },
-          styleOff = {
-            boxShadow: "0 0 1px rgba(0,0,0,.01)" // fix Firefox bugs
-          };
+          styleOff = {};
 
       // off image
       $off = this.$img;
@@ -305,12 +314,12 @@
 
       // on image
       $on = $( $("<div>").append($off.clone()).html() ) // ie7 jQuery.clone() bug fix
-        .addClass(ClassName.on)
+        .addClass(ClassSet.on)
         .attr("src", this.on);
 
       // wrap
-      $off.wrap('<span class="'+ClassName.image+'" style="position:relative; display:inline-block; /display:inline;"></span>');
-      $image = this.$elem.find(ClassName.image);
+      $off.wrap('<span class="'+ClassSet.image+'" style="position:relative; display:inline-block; /display:inline;"></span>');
+      $image = this.$elem.find(ClassSet.image);
 
       if( position === "static" ){
         styleOff.position = "relative";
@@ -328,8 +337,8 @@
       $off.css(styleOff);
 
       // append
-      $off.css("z-index", 2).addClass(ClassName.off);
-      this.$elem.find("."+ClassName.image).append($on);
+      $off.css("z-index", 2).addClass(ClassSet.off);
+      this.$elem.find("."+ClassSet.image).append($on);
     }
 
     this.$on = $on;
@@ -365,7 +374,7 @@
           "position": "",
           "z-index": ""
         })
-        .removeClass(ClassName.off);
+        .removeClass(ClassSet.off);
     }
   };
 
@@ -404,18 +413,16 @@
    * @return void
    */
   ImageChanger.prototype._bindEvents = function(){
-    var _this = this;
-
-    if( _this.options.hover === true ){
+    if( this.options.hover === true ){
       if( isTouch ){
-        _this.$elem
-          .on(TouchEvent.TOUCH_START, $.proxy(_this._onTouchStartHandler, _this))
-          .on(TouchEvent.TOUCH_END, $.proxy(_this._onTouchEndHandler, _this))
-          .on(TouchEvent.TOUCH_MOVE, $.proxy(_this._onTouchMoveHandler, _this));
+        this.$elem
+          .on(TouchEvent.TOUCH_START, $.proxy(this._onTouchStartHandler, this))
+          .on(TouchEvent.TOUCH_END, $.proxy(this._onTouchEndHandler, this))
+          .on(TouchEvent.TOUCH_MOVE, $.proxy(this._onTouchMoveHandler, this));
       }else{
-        _this.$elem
-          .on(MouseEvent.ROLL_OVER, $.proxy(_this._onRollOverHandler, _this))
-          .on(MouseEvent.ROLL_OUT, $.proxy(_this._onRollOutHandler, _this));
+        this.$elem
+          .on(MouseEvent.ROLL_OVER, $.proxy(this._onRollOverHandler, this))
+          .on(MouseEvent.ROLL_OUT, $.proxy(this._onRollOutHandler, this));
       }
     }
   };
@@ -485,7 +492,7 @@
    * @param string
    * @param function
    * @param [param1, param2, ...]
-   * @return boolean
+   * @return mixed
    */
   ImageChanger.prototype._callbackApply = function(){
     var type = arguments[0],
@@ -503,36 +510,36 @@
   };
 
   /**
-   * suffix exists ?
+   * Have the suffix
    * @param string
    * @return boolean
    */
   ImageChanger.prototype._hasSuffix = function(src){
-    return src.match(new RegExp("^(.+)"+this.options.suffix+"("+this.imageTypes+")$", "gi")) ? true : false;
+    return __hasSuffix(src, this.options.suffix, this.imageTypes);
   };
 
   /**
-   * Add suffix
+   * Add the suffix
    * @param string
-   * @return boolean
+   * @return string
    */
   ImageChanger.prototype._addSuffix = function(src){
-    return src.replace(new RegExp("^(.+)("+this.imageTypes+")$", "gi"), "$1"+this.options.suffix+"$2");
+    return __addSuffix(src, this.options.suffix, this.imageTypes);
   };
 
   /**
-   * Remove suffix
+   * Remove the suffix
    * @param string
-   * @return boolean
+   * @return string
    */
   ImageChanger.prototype._removeSuffix = function(src){
-    return src.replace(new RegExp("^(.+)("+this.options.suffix+")("+this.imageTypes+")$", "gi"), "$1$3");
+    return __removeSuffix(src, this.options.suffix, this.imageTypes);
   };
 
   /**
    * Start transition
    * @param string
-   * @return boolean
+   * @return void
    */
   ImageChanger.prototype._transition = function(type, callback){
     var _this = this,
@@ -546,20 +553,22 @@
   /**
    * Get transition
    * if empty create a new transition object
-   * @return boolean
+   * @return void
    */
   ImageChanger.prototype._getTransition = function(){
+    var transition = this.options.transition;
+
     // not animations
-    if( this.options.transition === false || this.options.transition === "none" ){
+    if( transition === false || transition === "none" ){
       return $.extend({}, Transition.base);
 
     // search buildint transitions
-    }else if( Transition.builtin.hasOwnProperty(this.options.transition.type) ){
-      return Transition.builtin[this.options.transition.type];
+    }else if( hasProp(Transition.builtin, transition.type) ){
+      return Transition.builtin[transition.type];
 
     // custom transition
-    }else if( this.options.transition.type === "custom" ){
-      return $.extend({}, Transition.base, this.options.transition);
+    }else if( transition.type === "custom" ){
+      return $.extend({}, Transition.base, transition);
     }
 
     throw new Error("[ImageChanger] :: Is invalid specification of transition.");
@@ -670,6 +679,7 @@
     this._unbindEvents();
     this._unbuildHtml();
 
+    // set status
     this.status.enable = false;
 
     // remove data
@@ -678,18 +688,177 @@
 
 
 
+
   /**
    * =========================================================
-   * Utilities
+   * Global API
    * =========================================================
    */
-  function sliceArray(array, start, end){
-    return Array.prototype.slice.call(array, start, end !== undefined ? end : array.length);
+  var imageTypesReg = imageTypesToRegex(defaults.imageTypes);
+
+
+
+  /**
+   * Check have the suffix
+   * @param string | jQueryObject
+   * @param string
+   * @param string
+   * @return boolean
+   */
+  function __hasSuffix(target, suffix, imageTypes){
+    suffix = suffix || defaults.suffix;
+    imageTypes = imageTypes || imageTypesReg;
+    if( $.type(target) === "string" ){
+      return target.match(new RegExp("^(.+)" + suffix + "(" + imageTypes + ")$", "gi")) ? true : false;
+    }
+    return false;
   }
 
-  function isEmpty(val){
-    return !val || val === "" || val === 0;
+  /**
+   * Add the suffix
+   * @param string | jQueryObject
+   * @param string
+   * @param string
+   * @return string | array
+   */
+  function __addSuffix(target, suffix, imageTypes){
+    suffix = suffix || defaults.suffix;
+    imageTypes = imageTypes || imageTypesReg;
+
+    if( $.type(target) === "string" ){
+      if( __hasSuffix.apply(this, arguments) ) return target;
+      return target.replace(new RegExp("^(.+)(" + imageTypes + ")$", "gi"), "$1" + suffix + "$2");
+
+    }else if( target && target["jquery"] ){
+      var $this, src, results = [];
+
+      target.each(function(){
+        $this = $(this);
+        if( $this.is("img") ){
+          src = __addSuffix($this.attr("src"), suffix, imageTypes);
+          $this.attr("src", src);
+          results.push(src);
+        }else{
+          results = results.concat(__addSuffix($this.find("img"), suffix, imageTypes));
+        }
+      });
+
+      return results;
+    }
+
+    return false;
   }
+
+  /**
+   * Remove the suffix
+   * @param string | jQueryObject
+   * @param string
+   * @param string
+   * @return string | array
+   */
+  function __removeSuffix(target, suffix, imageTypes){
+    suffix = suffix || defaults.suffix;
+    imageTypes = imageTypes || imageTypesReg;
+
+    if( $.type(target) === "string" ){
+      if( !__hasSuffix.apply(this, arguments) ) return target;
+      return target.replace(new RegExp("^(.+)(" + suffix + ")(" + imageTypes + ")$", "gi"), "$1$3");
+
+    }else if( target && target["jquery"] ){
+      var $this, src, results = [];
+
+      target.each(function(){
+        $this = $(this);
+        if( $this.is("img") ){
+          src = __removeSuffix($this.attr("src"), suffix, imageTypes);
+          $this.attr("src", src);
+          results.push(src);
+        }else{
+          results = results.concat(__removeSuffix($this.find("img"), suffix, imageTypes));
+        }
+      });
+
+      return results;
+    }
+
+    return false;
+  }
+
+  /**
+   * Toggle the suffix
+   * @param string | jQueryObject
+   * @param string
+   * @param string
+   * @return string | array
+   */
+  function __toggleSuffix(target, suffix, imageTypes){
+    suffix = suffix || defaults.suffix;
+    imageTypes = imageTypes || imageTypesReg;
+
+    if( $.type(target) === "string" ){
+      return __hasSuffix.apply(this, arguments) ? 
+        __removeSuffix.apply(this, arguments) :
+        __addSuffix.apply(this, arguments);
+
+    }else if( target && target["jquery"] ){
+      var $this, src, results = [];
+
+      target.each(function(){
+        $this = $(this);
+        if( $this.is("img") ){
+          src = __toggleSuffix($this.attr("src"), suffix, imageTypes);
+          $this.attr("src", src);
+          results.push(src);
+        }else{
+          results = results.concat(__toggleSuffix($this.find("img"), suffix, imageTypes));
+        }
+      });
+
+      return results;
+    }
+
+    return false;
+  }
+
+  /**
+   * Run the API from the method name
+   * @param string
+   * @param [arg1, arg2, ...]
+   * @return mixed
+   */
+  ImageChanger.callAPI = function(){
+    var method = arguments[0],
+        params = sliceArray(arguments, 1);
+
+    switch( method ){
+      case "addSuffix"    : return __addSuffix.apply(this, params);
+      case "removeSuffix" : return __removeSuffix.apply(this, params);
+      case "toggleSuffix" : return __toggleSuffix.apply(this, params);
+      default: 
+        throw new Error("[ImageChanger] :: Is invalid specification of Global API.");
+    }
+  };
+
+  /**
+   * register built-in transition.
+   * @param string
+   * @param object
+   * @return void
+   */
+  ImageChanger.registerTransition = function(name, transition){
+    Transition.builtin[name] = $.extend({}, Transition.base, transition);
+  };
+
+  /**
+   * unregister built-in transition
+   * @param string
+   * @return void
+   */
+  ImageChanger.unregisterTransition = function(name){
+    delete Transition.builtin[name];
+  };
+
+
 
 
 
@@ -700,7 +869,7 @@
    */
 
   // fade
-  $.imageChanger.registerTransition("fade", {
+  ImageChanger.registerTransition("fade", {
     initialize: function(params){
       this.$on.css("opacity", 0);
     },
@@ -734,7 +903,7 @@
 
 
   // wink
-  $.imageChanger.registerTransition("wink", {
+  ImageChanger.registerTransition("wink", {
     defaults: {
       duration: 150,
       easing: "swing",
@@ -778,7 +947,7 @@
 
 
   // slide
-  $.imageChanger.registerTransition("slide", {
+  ImageChanger.registerTransition("slide", {
     defaults: {
       duration: 150,
       easing: "swing",
@@ -888,6 +1057,9 @@
     }
   });
 
+
+  // Export global api.
+  $.imageChanger = $.imageChanger || ImageChanger;
 
 
   // Register imageChanger method for $.fn

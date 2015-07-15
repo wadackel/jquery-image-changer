@@ -27,6 +27,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 * Support callback and custom events
 * Support enable and disable methods
 * Support destroy method
+* Other it will provide some utility API.
 
 
 ## Install
@@ -223,6 +224,47 @@ ic.destroy();  //Destroy this plugin
 
 
 
+## Global API
+Will provide an API that does not depend on the elements. (version added: `2.0.6`)
+
+```javascript
+/**
+ * $.imageChanger("addSuffix", target, [suffix]);
+ * - target: string | jQueryObject
+ * - suffix: string
+ */
+$.imageChanger("addSuffix", "path/img.jpg");                    // -> "path/img_on.jpg"
+$.imageChanger("addSuffix", "path/img.jpg", "_active");         // -> "path/img_active.jpg"
+$.imageChanger("addSuffix", "path/img_on.jpg");                 // -> "path/img_on.jpg"
+$.imageChanger("addSuffix", $(selector));                       // -> will add the "_on" to all of the images.
+$.imageChanger("addSuffix", $(selector), "_active");            // -> will add the "_active" to all of the images.
+
+/**
+ * $.imageChanger("removeSuffix", target, [suffix]);
+ * - target: string | jQueryObject
+ * - suffix: string
+ */
+$.imageChanger("removeSuffix", "path/img_on.jpg");                // -> "path/img.jpg"
+$.imageChanger("removeSuffix", "path/img.jpg");                   // -> "path/img.jpg"
+$.imageChanger("removeSuffix", "path/img_active.jpg", "_active"); // -> "path/img.jpg"
+$.imageChanger("removeSuffix", $(selector));                      // -> will remove the "_on" of all of the images.
+$.imageChanger("removeSuffix", $(selector), "_active");           // -> will remove the "_active" of all of the images.
+
+/**
+ * $.imageChanger("toggleSuffix", target, [suffix]);
+ * - target: string | jQueryObject
+ * - suffix: string
+ */
+$.imageChanger("toggleSuffix", "path/img.jpg");                   // -> "path/img_on.jpg"
+$.imageChanger("toggleSuffix", "path/img_on.jpg");                // -> "path/img.jpg"
+$.imageChanger("toggleSuffix", "path/img.jpg", "_active");        // -> "path/img_active.jpg"
+$.imageChanger("toggleSuffix", "path/img_active.jpg", "_active"); // -> "path/img.jpg"
+$.imageChanger("toggleSuffix", $(selector));                      // -> will toggle the "_on" of all of the images.
+$.imageChanger("toggleSuffix", $(selector), "_active");           // -> will toggle the "_active" of all of the images.
+```
+
+
+
 ## Custom Transitions
 
 * **`initialize()`** - Implement the initialization of style and DOM structure
@@ -345,7 +387,10 @@ It can be solved by adding the following CSS.
 ```
 
 
+
 ## Change Log
+* **[2015.07.15]** Add 3 Global API. (`addSuffix`, `removeSuffix`, `toggleSuffix`)
+* **[2015.06.15]** Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
 * **[2015.06.15]** Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
 * **[2015.04.05]** Support `bower` and `npm` install. And some bug fixes.
 * **[2015.01.31]** Fix IE7 `slide` transition bugs.
@@ -353,9 +398,9 @@ It can be solved by adding the following CSS.
 * **[2015.01.04]** First release.
 
 
+
 ## TODO
-* Switching of multiple image.
-* Provide global API. (Example: `$.imageChanger("toggle", $(selector))`)
+* <del>Provide global API. (Example: `$.imageChanger("toggle", $(selector))`)</del>
 
 
 
