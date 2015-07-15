@@ -76,7 +76,10 @@ $(selector).imageChanger({
 	suffix         : "_on", // img.png => img_on.png
 	hover          : true,
 	transition     : {
-		type: "fade"
+		type: "fade",
+		duration: 150,
+		easing: "linear",
+		opacity: 0
 	},
 	backgroundImage: false,
 	imageTypes     : "jpg|jpeg|gif|png",
@@ -112,6 +115,12 @@ Specifies the transition.
 ![fade transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/fade.gif)
 
 ```javascript
+// Simple
+$(selector).imageChanger(
+	transition: "fade"
+);
+
+// More options
 $(selector).imageChanger({
 	transition: {
 		type    : "fade",
@@ -128,7 +137,7 @@ $(selector).imageChanger({
 
 ```javascript
 $(selector).imageChanger({
-	transition: false
+	transition: false //false | "none" | "default"
 });
 ```
 
@@ -137,6 +146,12 @@ $(selector).imageChanger({
 **wink:**
 
 ```javascript
+// Simple
+$(selector).imageChanger(
+	transition: "wink"
+);
+
+// More options
 $(selector).imageChanger({
 	transition: {
 		type    : "wink",
@@ -152,6 +167,12 @@ $(selector).imageChanger({
 ![slide transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/slide.gif)
 
 ```javascript
+// Simple
+$(selector).imageChanger(
+	transition: "slide"
+);
+
+// More options
 $(selector).imageChanger({
 	transition: {
 		type     : "slide",
@@ -324,14 +345,14 @@ $(selector).imageChanger({
 ```
 
 In addition, it can be registered as a builtin transition.  
-To do the registration you can use the `$.imageChanger.registerTransition()`.
+To do the registration you can use the `$.imageChanger("registerTransition", ...)`.
 
 
-**Example `$.imageChanger#registerTransition()`**
+**Example `$.imageChanger("registerTransition", ...)`**
 
 ```javascript
 // Register Custom Transition.
-$.imageChanger.registerTransition("example", {
+$.imageChanger("registerTransition", {
 	defaults: {
 		// default parametors...
 	},
@@ -358,6 +379,9 @@ $(selector).imageChanger({
 	}
 });
 ```
+
+**Notes:**
+`$.imageChanger.registerTransition()` It is deprecated. at version `2.0.7`.
 
 
 ## Requirements

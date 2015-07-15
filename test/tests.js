@@ -382,6 +382,30 @@ QUnit.test("should be value of the position is adjusted", function(assert){
 });
 
 
+QUnit.test("transition option should be a string or object", function(assert){
+  var $elObj = this.$el,
+      $elStr = this.$el.clone();
+      $elDataObj = this.$el.clone().attr("data-ic-transition", '{"type": "slide"}'),
+      $elDataStr = this.$el.clone().attr("data-ic-transition", 'slide');
+
+  var icObj = $elObj.imageChanger({
+    transition: {
+      type: "fade"
+    }
+  }).data("imageChanger");
+
+  var icStr = $elObj.imageChanger({
+    transition: "fade"
+  }).data("imageChanger");
+
+  var icDataObj = $elDataObj.imageChanger().data("imageChanger");
+  var icDataStr = $elDataStr.imageChanger().data("imageChanger");
+
+  assert.deepEqual(icObj.transition, icStr.transition, "construct options ok");
+  assert.deepEqual(icDataObj.transition, icDataStr.transition, "custom data options ok");
+});
+
+
 
 
 QUnit.module("data API - onImage()", {

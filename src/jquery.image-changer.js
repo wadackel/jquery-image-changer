@@ -18,7 +18,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.6",
+  var version = "2.0.7",
 
   // Default Options
   defaults = {
@@ -68,10 +68,7 @@
   },
 
   // touch device?
-  isTouch = ("ontouchstart" in window),
-
-  // lt IE7?
-  ltIe7 = window.addEventListener === undefined && document.querySelectorAll === undefined;
+  isTouch = ("ontouchstart" in window);
 
 
 
@@ -91,10 +88,6 @@
   
   function hasProp(obj, key){
     return obj != null && Object.prototype.hasOwnProperty.call(obj, key);
-  }
-
-  function pregQuote(str, delimiter){
-    return String(str).replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
   }
 
   function imageTypesToRegex(imageTypes){
@@ -122,22 +115,26 @@
         easing: "linear",
         opacity: 0
       },
+
       initialize: function(params){
         params = params;
         this.$on.css("opacity", 0);
       },
+
       on: function(params, done){
         params = params;
         this.$on.css("opacity", 1);
         this.$off.css("opacity", 0);
-        done.call();
+        done();
       },
+
       off: function(params, done){
         params = params;
         this.$on.css("opacity", 0);
         this.$off.css("opacity", 1);
-        done.call();
+        done();
       },
+      
       destroy: function(){
       }
     }
@@ -155,36 +152,10 @@
     // Call Global API
     if( $.type(arguments[0]) === "string" ){
       return ImageChanger.callAPI.apply(this, arguments);
+    }
 
     // Generation of instance
-    }else{
-      this.version = version;
-      this.options = null;
-      this.transition = null;
-      this.imageTypes = "";
-
-      this.$elem = null;
-      this.$img = null;
-      this.$parant = null;
-      this.$on = null;
-      this.$off = null;
-
-      this.status = {
-        active : false,
-        animate: false,
-        enable : false,
-        loaded : false,
-        error  : false
-      };
-
-      this.touchTimer = false;
-
-      this.on = "";
-      this.off = "";
-
-      // Initialize
-      this._initialize.apply(this, arguments);
-    }
+    this._initialize.apply(this, arguments);
   }
 
   /**
@@ -193,6 +164,30 @@
    * @param object
    */
   ImageChanger.prototype._initialize = function($elem, options){
+    this.version = version;
+    this.options = null;
+    this.transition = null;
+    this.imageTypes = "";
+
+    this.$elem = null;
+    this.$img = null;
+    this.$parant = null;
+    this.$on = null;
+    this.$off = null;
+
+    this.status = {
+      active : false,
+      animate: false,
+      enable : false,
+      loaded : false,
+      error  : false
+    };
+
+    this.touchTimer = false;
+
+    this.on = "";
+    this.off = "";
+
     this.$elem = $elem;
     this.options = options;
     
@@ -390,7 +385,7 @@
     this._bindEvents();
 
     // transition intialize
-    this.transition.initialize.call(this, $.extend({}, this.transition.defaults, this.options.transition));
+    this.transition.initialize.call(this, $.extend(true, {}, this.transition.defaults, this.options.transition));
 
     // afterInit
     this._callbackApply("afterInit", this.options.afterInit, "success");
@@ -556,18 +551,23 @@
    * @return void
    */
   ImageChanger.prototype._getTransition = function(){
-    var transition = this.options.transition;
+    var transition = this.options.transition,
+        type = transition ? transition.type : "";
 
     // not animations
-    if( transition === false || transition === "none" ){
+    if( transition === false || transition === "none" || transition === "default" ){
       return $.extend({}, Transition.base);
 
-    // search buildint transitions
-    }else if( hasProp(Transition.builtin, transition.type) ){
-      return Transition.builtin[transition.type];
+    // search builtin transitions (string)
+    }else if( hasProp(Transition.builtin, transition) ){
+      return Transition.builtin[transition];
+
+    // search builtin transitions (object)
+    }else if( hasProp(Transition.builtin, type) ){
+      return Transition.builtin[type];
 
     // custom transition
-    }else if( transition.type === "custom" ){
+    }else if( type === "custom" ){
       return $.extend({}, Transition.base, transition);
     }
 
@@ -697,6 +697,25 @@
   var imageTypesReg = imageTypesToRegex(defaults.imageTypes);
 
 
+
+  /**
+   * register built-in transition.
+   * @param string
+   * @param object
+   * @return void
+   */
+  function __registerTransition(name, transition){
+    Transition.builtin[name] = $.extend({}, Transition.base, transition);
+  };
+
+  /**
+   * unregister built-in transition
+   * @param string
+   * @return void
+   */
+  function __unregisterTransition(name){
+    delete Transition.builtin[name];
+  };
 
   /**
    * Check have the suffix
@@ -831,9 +850,11 @@
         params = sliceArray(arguments, 1);
 
     switch( method ){
-      case "addSuffix"    : return __addSuffix.apply(this, params);
-      case "removeSuffix" : return __removeSuffix.apply(this, params);
-      case "toggleSuffix" : return __toggleSuffix.apply(this, params);
+      case "addSuffix"            : return __addSuffix.apply(this, params);
+      case "removeSuffix"         : return __removeSuffix.apply(this, params);
+      case "toggleSuffix"         : return __toggleSuffix.apply(this, params);
+      case "registerTransition"   : return __registerTransition.apply(this, params);
+      case "unregisterTransition" : return __unregisterTransition.apply(this, params);
       default: 
         throw new Error("[ImageChanger] :: Is invalid specification of Global API.");
     }
@@ -841,21 +862,25 @@
 
   /**
    * register built-in transition.
+   * @deprecated at v2.0.7
+   * 
    * @param string
    * @param object
    * @return void
    */
-  ImageChanger.registerTransition = function(name, transition){
-    Transition.builtin[name] = $.extend({}, Transition.base, transition);
+  ImageChanger.registerTransition = function(){
+    __registerTransition.apply(this, arguments);
   };
 
   /**
    * unregister built-in transition
+   * @deprecated at v2.0.7
+   * 
    * @param string
    * @return void
    */
-  ImageChanger.unregisterTransition = function(name){
-    delete Transition.builtin[name];
+  ImageChanger.unregisterTransition = function(){
+    __unregisterTransition.apply(this, arguments);
   };
 
 
@@ -869,32 +894,41 @@
    */
 
   // fade
-  ImageChanger.registerTransition("fade", {
+  __registerTransition("fade", {
     initialize: function(params){
       this.$on.css("opacity", 0);
     },
+
     on: function(params, done){
+      var duration = params.duration,
+          easing = params.easing;
+
       this.$on.css("opacity", 1);
       
       this.$off
         .stop()
         .animate({
           "opacity": params.opacity
-        }, params.duration, params.easing, done);
+        }, duration, easing, done);
     },
+
     off: function(params, done){
+      var duration = params.duration,
+          easing = params.easing;
+
       this.$on
         .stop()
         .animate({
           "opacity": 1
-        }, params.duration / 2, params.easing);
+        }, duration / 2, easing);
 
       this.$off
         .stop()
         .animate({
           "opacity": 1
-        }, params.duration, params.easing, done);
+        }, duration, easing, done);
     },
+
     destroy: function(){
       this.$off.stop(true,true).css("opacity", "");
       this.$on.stop(true,true).css("opacity", "");
@@ -903,42 +937,47 @@
 
 
   // wink
-  ImageChanger.registerTransition("wink", {
+  __registerTransition("wink", {
     defaults: {
       duration: 150,
       easing: "swing",
       opacity: 0.4
     },
+
     initialize: function(params){
       this.$on.css("opacity", 0);
     },
-    on: function(params, done){
-      if( this.$off.is(":animated") ){
-        done.call();
-      }else{
-        this.$on
-          .stop()
-          .animate({
-            "opacity": 1
-          }, params.duration, params.easing)
-          .animate({
-            "opacity": 0
-          }, params.duration, params.easing);
 
-        this.$off
-          .stop()
-          .animate({
-            "opacity": params.opacity
-          }, params.duration, params.easing)
-          .animate({
-            "opacity": 1
-          }, params.duration, params.easing, done);
-      }
+    on: function(params, done){
+      if( this.$off.is(":animated") ) return done();
+
+      var duration = params.duration,
+          easing = params.easing;
+
+      this.$on
+        .stop()
+        .animate({
+          "opacity": 1
+        }, duration, easing)
+        .animate({
+          "opacity": 0
+        }, duration, easing);
+
+      this.$off
+        .stop()
+        .animate({
+          "opacity": params.opacity
+        }, duration, easing)
+        .animate({
+          "opacity": 1
+        }, duration, easing, done);
     },
+
     off: function(params, done){
       params = params;
-      done.call();
+      done();
     },
+
     destroy: function(){
       this.$on.stop(true,true).css("opacity", "");
       this.$off.stop(true,true).css("opacity", "");
@@ -947,13 +986,14 @@
 
 
   // slide
-  ImageChanger.registerTransition("slide", {
+  __registerTransition("slide", {
     defaults: {
       duration: 150,
       easing: "swing",
       direction: "top",
       display: "inline-block"
     },
+
     initialize: function(params){
       var position = this.$elem.css("position") === "static" ? "relative" : this.$elem.css("position"),
           display = this.$elem.css("display") === "inline" ? params.display : this.$elem.css("display");
@@ -988,56 +1028,71 @@
           break;
       }
     },
+
     on: function(params, done){
       var size = {
         width: this.$elem.width(),
         height: this.$elem.height()
       };
 
+      var duration = params.duration,
+          easing = params.easing;
+
+      this.$off.stop();
+      this.$on.stop();
+
       switch( params.direction ){
         case "top":
-          this.$off.stop().animate({"top": -size.height}, params.duration, params.easing);
-          this.$on.stop().animate({"top": 0}, params.duration, params.easing, done);
+          this.$off.animate({"top": -size.height}, duration, easing);
+          this.$on.animate({"top": 0}, duration, easing, done);
           break;
         case "right":
-          this.$off.stop().animate({"left": size.width}, params.duration, params.easing);
-          this.$on.stop().animate({"left": 0}, params.duration, params.easing, done);
+          this.$off.animate({"left": size.width}, duration, easing);
+          this.$on.animate({"left": 0}, duration, easing, done);
           break;
         case "bottom":
-          this.$off.stop().animate({"top": size.height}, params.duration, params.easing);
-          this.$on.stop().animate({"top": 0}, params.duration, params.easing, done);
+          this.$off.animate({"top": size.height}, duration, easing);
+          this.$on.animate({"top": 0}, duration, easing, done);
           break;
         case "left":
-          this.$off.stop().animate({"left": -size.width}, params.duration, params.easing);
-          this.$on.stop().animate({"left": 0}, params.duration, params.easing, done);
+          this.$off.animate({"left": -size.width}, duration, easing);
+          this.$on.animate({"left": 0}, duration, easing, done);
           break;
       }
     },
+
     off: function(params, done){
       var size = {
         width: this.$elem.width(),
         height: this.$elem.height()
       };
 
+      var duration = params.duration,
+          easing = params.easing;
+
+      this.$off.stop();
+      this.$on.stop();
+
       switch( params.direction ){
         case "top":
-          this.$off.stop().animate({"top": 0}, params.duration, params.easing);
-          this.$on.stop().animate({"top": size.height}, params.duration, params.easing, done);
+          this.$off.animate({"top": 0}, duration, easing);
+          this.$on.animate({"top": size.height}, duration, easing, done);
           break;
         case "right":
-          this.$off.stop().animate({"left": 0}, params.duration, params.easing);
-          this.$on.stop().animate({"left": -size.width}, params.duration, params.easing, done);
+          this.$off.animate({"left": 0}, duration, easing);
+          this.$on.animate({"left": -size.width}, duration, easing, done);
           break;
         case "bottom":
-          this.$off.stop().animate({"top": 0}, params.duration, params.easing);
-          this.$on.stop().animate({"top": -size.height}, params.duration, params.easing, done);
+          this.$off.animate({"top": 0}, duration, easing);
+          this.$on.animate({"top": -size.height}, duration, easing, done);
           break;
         case "left":
-          this.$off.stop().animate({"left": 0}, params.duration, params.easing);
-          this.$on.stop().animate({"left": size.width}, params.duration, params.easing, done);
+          this.$off.animate({"left": 0}, duration, easing);
+          this.$on.animate({"left": size.width}, duration, easing, done);
           break;
       }
     },
+
     destroy: function(){
       var emptyPosition = {
         "top": "",
@@ -1081,7 +1136,7 @@
         });
 
         // Create ImageChanger instance
-        $this.data("imageChanger", new ImageChanger($this, $.extend({}, defaults, options, dataOptions)));
+        $this.data("imageChanger", new ImageChanger($this, $.extend(true, {}, defaults, options, dataOptions)));
       }
     });
   };
