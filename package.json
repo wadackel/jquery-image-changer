@@ -1,6 +1,6 @@
 {
   "name": "jquery-image-changer",
-  "version": "2.0.7",
+  "version": "2.1.0",
   "main": "dist/jquery.image-changer.js",
   "scripts": {
     "test": "gulp test"
