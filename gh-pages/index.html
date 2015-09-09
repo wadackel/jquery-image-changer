@@ -14,7 +14,7 @@
     <div class="container">
       <h1>jQuery.imageChanger.js<small>DEMO</small></h1>
       <ul class="gnav">
-        <li><a data-role="rollover" href="#transitions" data-ic-transition="none"><img src="images/nav01_on.jpg" alt="Transitions"></a></li>
+        <li><a data-role="rollover" href="#transitions"><img src="images/nav01.jpg" alt="Transitions"></a></li>
         <li><a data-role="rollover" href="#background-image"><img src="images/nav02.jpg" alt="Background Image"></a></li>
         <li><a data-role="rollover" href="#data-api"><img src="images/nav03.jpg" alt="Data API"></a></li>
         <li><a data-role="rollover" href="#download"><img src="images/nav04.jpg" alt="Download"></a></li>
@@ -22,7 +22,7 @@
       <div id="transitions" class="section">
         <h2>Transitions</h2>
         <h3>None</h3>
-        <p><span data-role="rollover" data-ic-transition="false"><img src="images/face01_on.jpg" atl="image"></span></p>
+        <p><span data-role="rollover" data-ic-transition="false"><img src="images/face01.jpg" atl="image"></span></p>
         <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
   transition: false
 });
@@ -177,13 +177,7 @@ $(&quot;#control-default&quot;).on(&quot;click&quot;, function(){
       
       
         // image changer
-        $("[data-role='rollover']").imageChanger({
-          afterInit: function(){
-            if( this.status.active ){
-              this.destroy();
-            }
-          }
-        });
+        $("[data-role='rollover']").imageChanger({});
       
       
         // data api sample

@@ -18,7 +18,7 @@
 }(this, function($){
   "use strict";
 
-  var version = "2.0.7",
+  var version = "2.1.0",
 
   // Default Options
   defaults = {

@@ -89,7 +89,11 @@ gulp.task "default", ["scripts"], ->
 gulp.task "build", (cb) -> runSequence(
   "clean",
   "scripts",
-  "uglify"
-  "test"
+  "uglify",
+  [
+    "test"
+    "demo:sass"
+    "demo:jade"
+  ],
   cb
 )

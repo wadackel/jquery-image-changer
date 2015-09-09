@@ -399,6 +399,21 @@ $(selector).imageChanger({
 * Android2.3 +
 
 
+## Tips
+### Destroy on after initialize.
+It useful tips for navigation operation.
+
+```javascript
+$(selector).imageChanger({
+	afterInit: function(){
+		if( this.status.startOn ){
+			this.destroy();
+		}
+	}
+});
+```
+
+
 ## Notes
 ### If lower than Firefox version 35.0
 Bug occurs during the animation.  
@@ -415,6 +430,9 @@ It can be solved by adding the following CSS.
 
 
 ## Change Log
+
+### v2.1.0 (Sep 10, 2015)
+Add `startOn` tips. and `startOn` bugs.
 
 ### v2.0.7 (Jul 15, 2015)
 Add 3 Global API. (`addSuffix`, `removeSuffix`, `toggleSuffix`)
