@@ -1,0 +1,267 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no")
+    title jQuery.imageChanger.js
+    link(rel="stylesheet", href="js/code-prettify/prettify.css")
+    link(rel="stylesheet", href="css/style.css")
+  body
+
+    a.gh-ribbon(href="https://github.com/tsuyoshiwada/jquery-image-changer")
+      img(style="position: absolute; top: 0; right: 0; border: 0; z-index:9999;", src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67", alt="Fork me on GitHub", data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png")
+
+    .mainvisual
+      .container(data-role="rollover")
+        img(src="images/mainvisual.jpg", alt="")
+
+    .container
+      h1 jQuery.imageChanger.js
+        small DEMO
+
+      ul.gnav
+        li
+          a(data-role="rollover", href="#transitions")
+            img(src="images/nav01.jpg", alt="Transitions")
+        li
+          a(data-role="rollover", href="#background-image")
+            img(src="images/nav02.jpg", alt="Background Image")
+        li
+          a(data-role="rollover", href="#data-api")
+            img(src="images/nav03.jpg", alt="Data API")
+        li
+          a(data-role="rollover", href="#download")
+            img(src="images/nav04.jpg", alt="Download")
+
+
+      #transitions.section
+        h2 Transitions
+        h3 None
+        p
+          span(data-role="rollover", data-ic-transition="false")
+            img(src="images/face01.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: false
+            });
+            ```
+
+        h3 Fade (default)
+        p
+          span(data-role="rollover", data-ic-transition="fade")
+            img(src="images/face02.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: "fade"
+              // or
+              // transition: {type: "fade", ...some options}
+            });
+            ```
+
+        h3 Wink
+        p
+          span(data-role="rollover", data-ic-transition="wink")
+            img(src="images/image.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: "wink"
+              // 
+              // transition: {type: "wink", ...some options}
+            });
+            ```
+
+        h3 Slide
+        h4 direction - top
+        p
+          span(data-role="rollover", data-ic-transition='{"type": "slide", "direction": "top"}')
+            img(src="images/image.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: {type: "slide", "direction": "top"}
+            });
+            ```
+
+        h4 direction - bottom
+        p
+          span(data-role="rollover", data-ic-transition='{"type": "slide", "direction": "bottom"}')
+            img(src="images/image.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: {type: "slide", "direction": "bottom"}
+            });
+            ```
+
+        h4 direction - left
+        p
+          span(data-role="rollover", data-ic-transition='{"type": "slide", "direction": "left"}')
+            img(src="images/image.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: {type: "slide", "direction": "left"}
+            });
+            ```
+
+        h4 direction - right
+        p
+          span(data-role="rollover", data-ic-transition='{"type": "slide", "direction": "right"}')
+            img(src="images/image.jpg", atl="image")
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              transition: {type: "slide", "direction": "right"}
+            });
+            ```
+
+
+      #background-image.section
+        h2 Background Image
+        
+        div.show-code
+          :markdown
+            ```js
+            $("[data-role='rollover']").imageChanger({
+              // some options...
+              backgroundImage: true
+            });
+            ```
+
+        div
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='false') None
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "fade"}') Fade
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "wink"}') Wink
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "slide", "direction": "top"}') Slide Top
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "slide", "direction": "right"}') Slide Right
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "slide", "direction": "bottom"}') Slide Bottom
+          p.bg-image(data-role="rollover", data-ic-backgroundimage="true", data-ic-transition='{"type": "slide", "direction": "left"}') Slide Left
+
+
+      #data-api.section
+        h2 Data API
+        p#api-sample
+          img(src="images/face03.jpg", alt="image")
+        .btn-group
+          button#control-toggle.btn(type="button") toggle()
+          button#control-active.btn(type="button") onImage()
+          button#control-default.btn(type="button") offImage()
+        
+        div.show-code
+          :markdown
+            ```html
+            <p id="api-sample"><img src="images/face03.jpg" alt="image"></p>
+            <div>
+              <button id="control-toggle" type="button" class="btn">toggle()</button>
+              <button id="control-active" type="button" class="btn">onImage()</button>
+              <button id="control-default" type="button" class="btn">offImage()</button>
+            </div>
+            ```
+
+            ```js
+            //  In the sample to disable the `hover` option.
+            var $apiSample = $("#api-sample").imageChanger({hover: false});
+
+            // Get the ImageChanger instance.
+            var ic = $apiSample.data("imageChanger");
+
+            // on -> off
+            // or
+            // off -> on
+            $("#control-toggle").on("click", function(){
+              ic.toggle();
+              return false;
+            });
+            
+            // off -> on
+            $("#control-active").on("click", function(){
+              ic.onImage();
+              return false;
+            });
+            
+            // on -> off
+            $("#control-default").on("click", function(){
+              ic.offImage();
+              return false;
+            });
+            ```
+
+      #data-api.section
+        h2 PNG Sample
+        p
+          span(data-role="rollover", data-ic-transition='{"type": "fade", "duration": 500}')
+            img(src="images/face04.png", alt="image")
+
+
+      #download.section
+        h2 Download
+        p.btn-group
+          a.btn(href="https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/dist/jquery.image-changer.js", download="") Development
+          a.btn(href="https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/dist/jquery.image-changer.min.js", download="") Compressed
+          a.btn(href="https://github.com/tsuyoshiwada/jQuery.imageChanger") View on Github
+
+    p.copyright Copyright &copy; 
+      a(href="https://github.com/tsuyoshiwada/jquery-image-changer") tsuyoshiwada All Right Reserved.
+
+
+    script(type="text/javascript", src="js/code-prettify/prettify.js")
+    script(type="text/javascript", src="js/jquery-1.11.2.min.js")
+    script(type="text/javascript", src="js/jquery.sweet-scroll.min.js")
+    script(type="text/javascript", src="js/jquery.image-changer.js")
+    script(type="text/javascript").
+      $(function(){
+
+        // Syntax Highlight
+        $(".show-code").each(function(){
+          $("code", this).addClass("prettyprint");
+        });
+        prettyPrint();
+
+
+        // smooth scroll
+        $("a[href^='#']").sweetScroll({
+          duration: 800
+        });
+
+
+        // image changer
+        $("[data-role='rollover']").imageChanger();
+
+
+        // data api sample
+        var $apiSample = $("#api-sample").imageChanger({hover: false});
+
+        ic = $apiSample.data("imageChanger");
+
+        $("#control-toggle").on("click", function(){
+          ic.toggle();
+          return false;
+        });
+
+        $("#control-active").on("click", function(){
+          ic.onImage();
+          return false;
+        });
+
+        $("#control-default").on("click", function(){
+          ic.offImage();
+          return false;
+        });
+      });
