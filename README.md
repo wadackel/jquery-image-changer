@@ -1,8 +1,10 @@
-jquery-image-changer 
+jquery-image-changer
 ====================
 
-[![npm version](https://badge.fury.io/js/jquery-image-changer.svg)](http://badge.fury.io/js/jquery-image-changer)
-[![Build Status](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
+[![Build Status](http://img.shields.io/travis/tsuyoshiwada/jquery-image-changer.svg?style=flat-square)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
+[![npm version](https://img.shields.io/npm/v/jquery-image-changer.svg?style=flat-square)](http://badge.fury.io/js/jquery-image-changer)
+[![Bower](https://img.shields.io/bower/v/jquery-image-changer.svg?style=flat-square)](http://bower.io/search/?q=jquery-image-changer)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/LICENSE)
 
 ![jquery-image-changer](https://raw.githubusercontent.com/tsuyoshiwada/jQuery.imageChanger/images/plugin.png)
 
@@ -12,7 +14,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 
 ## Demo
 
-[demo](http://tsuyoshiwada.github.io/jquery-image-changer/)
+[see jquery-image-changer demo](http://tsuyoshiwada.github.io/jquery-image-changer/)
 
 
 ## Features
@@ -413,23 +415,24 @@ It can be solved by adding the following CSS.
 
 
 ## Change Log
-* **[2015.07.15]** Add 3 Global API. (`addSuffix`, `removeSuffix`, `toggleSuffix`)
-* **[2015.06.15]** Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
-* **[2015.06.15]** Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
-* **[2015.04.05]** Support `bower` and `npm` install. And some bug fixes.
-* **[2015.01.31]** Fix IE7 `slide` transition bugs.
-* **[2015.01.27]** Support the option specified in the custom data attributes.
-* **[2015.01.04]** First release.
 
+### v2.0.7 (Jul 15, 2015)
+Add 3 Global API. (`addSuffix`, `removeSuffix`, `toggleSuffix`)
 
+### v2.0.5 (Jun 15, 2015)
+Fix IE7 bug `<a>` click does not respond. And add animation of PNG image to demo page.
 
-## TODO
-* <del>Provide global API. (Example: `$.imageChanger("toggle", $(selector))`)</del>
+### v2.0.3 (Apr 5, 2015)
+Support `bower` and `npm` install. And some bug fixes.
 
+### v2.0.2 (Jan 31, 2015)
+Fix IE7 `slide` transition bugs.
 
+### v2.0.1 (Jan 27, 2015)
+Support the option specified in the custom data attributes.
 
-## Licence
-Released under the [MIT Licence](https://github.com/tsuyoshiwada/jQuery.imageChanger/blob/master/LICENCE)
+### v2.0.0 (Jan 4, 2015)
+First release.
 
 
 ## Author
