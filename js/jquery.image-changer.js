@@ -31,9 +31,7 @@
   defaults = {
     suffix         : "_on", // img.png => img_on.png
     hover          : true,
-    transition     : {
-      type: "fade"
-    },
+    transition     : "fade",
     backgroundImage: false,
     imageTypes     : "jpg|jpeg|gif|png",
 
@@ -124,19 +122,18 @@
       },
 
       initialize: function(params){
-        params = params;
-        this.$on.css("opacity", 0);
+        if( !this.status.startOn ){
+          this.$on.css("opacity", 0);
+        }
       },
 
       on: function(params, done){
-        params = params;
         this.$on.css("opacity", 1);
         this.$off.css("opacity", 0);
         done();
       },
 
       off: function(params, done){
-        params = params;
         this.$on.css("opacity", 0);
         this.$off.css("opacity", 1);
         done();
@@ -165,12 +162,15 @@
     this._initialize.apply(this, arguments);
   }
 
+  // alias for `prototype`
+  ImageChanger.fn = ImageChanger.prototype;
+
   /**
    * Initialize
    * @param jQueryObject 
    * @param object
    */
-  ImageChanger.prototype._initialize = function($elem, options){
+  ImageChanger.fn._initialize = function($elem, options){
     this.version = version;
     this.options = null;
     this.transition = null;
@@ -183,6 +183,7 @@
     this.$off = null;
 
     this.status = {
+      startOn: false, //add v2.1.0
       active : false,
       animate: false,
       enable : false,
@@ -228,7 +229,7 @@
     if( on ){
       this.on = src;
       this.off = this._removeSuffix(src);
-      this.status.active = true;
+      this.status.active = this.status.startOn = true;
     }else{
       this.on = this._addSuffix(src);
       this.off = src;
@@ -248,7 +249,7 @@
    * Build HTML elements
    * @return void
    */
-  ImageChanger.prototype._buildHtml = function(){
+  ImageChanger.fn._buildHtml = function(){
     var $elem = this.$elem,
         $inner,
         $image,
@@ -358,7 +359,7 @@
    * Remove HTML elements
    * @return void
    */
-  ImageChanger.prototype._unbuildHtml = function(){
+  ImageChanger.fn._unbuildHtml = function(){
     if( this.options.backgroundImage === true ){
       this.$elem.css({
         "background-image": "",
@@ -369,9 +370,12 @@
       this.$off.remove();
 
     }else{
+      var $on = !this.status.startOn ? this.$on : this.$off,
+          $off = !this.status.startOn ? this.$off : this.$on;
+
       this.$img.unwrap();
-      this.$on.remove();
-      this.$off
+      $on.remove();
+      $off
         .css({
           "position": "",
           "z-index": ""
@@ -385,7 +389,7 @@
    * @param eventObj
    * @return void
    */
-  ImageChanger.prototype._loadSuccess = function(){
+  ImageChanger.fn._loadSuccess = function(){
     this.status.enable = this.status.loaded = true;
 
     // bind events
@@ -403,7 +407,7 @@
    * @param eventObj
    * @return void
    */
-  ImageChanger.prototype._loadError = function(){
+  ImageChanger.fn._loadError = function(){
     this.status.error = true;
 
     // afterInit
@@ -414,7 +418,7 @@
    * Set some events
    * @return void
    */
-  ImageChanger.prototype._bindEvents = function(){
+  ImageChanger.fn._bindEvents = function(){
     if( this.options.hover === true ){
       if( isTouch ){
         this.$elem
@@ -433,7 +437,7 @@
    * Release some events
    * @return void
    */
-  ImageChanger.prototype._unbindEvents = function(){
+  ImageChanger.fn._unbindEvents = function(){
     if( this.options.hover === true ){
       if( isTouch ){
         this.$elem
@@ -452,7 +456,7 @@
    * RollOver
    * @return void
    */
-  ImageChanger.prototype._onRollOverHandler = function(){
+  ImageChanger.fn._onRollOverHandler = function(){
     this.onImage();
   };
 
@@ -460,7 +464,7 @@
    * RollOut
    * @return void
    */
-  ImageChanger.prototype._onRollOutHandler = function(){
+  ImageChanger.fn._onRollOutHandler = function(){
     this.offImage();
   };
 
@@ -468,7 +472,7 @@
    * TouchStart
    * @return void
    */
-  ImageChanger.prototype._onTouchStartHandler = function(){
+  ImageChanger.fn._onTouchStartHandler = function(){
     this.onImage();
   };
 
@@ -476,7 +480,7 @@
    * TouchEnd
    * @return void
    */
-  ImageChanger.prototype._onTouchEndHandler = function(){
+  ImageChanger.fn._onTouchEndHandler = function(){
     this.offImage();
   };
 
@@ -484,7 +488,7 @@
    * TouchMove
    * @return void
    */
-  ImageChanger.prototype._onTouchMoveHandler = function(){
+  ImageChanger.fn._onTouchMoveHandler = function(){
     if( this.touchTimer ) clearTimeout(this.touchTimer);
     this.touchTimer = setTimeout($.proxy(this.offImage, this), 200);
   };
@@ -496,7 +500,7 @@
    * @param [param1, param2, ...]
    * @return mixed
    */
-  ImageChanger.prototype._callbackApply = function(){
+  ImageChanger.fn._callbackApply = function(){
     var type = arguments[0],
         callback = arguments[1],
         params = sliceArray(arguments, 2),
@@ -516,7 +520,7 @@
    * @param string
    * @return boolean
    */
-  ImageChanger.prototype._hasSuffix = function(src){
+  ImageChanger.fn._hasSuffix = function(src){
     return __hasSuffix(src, this.options.suffix, this.imageTypes);
   };
 
@@ -525,7 +529,7 @@
    * @param string
    * @return string
    */
-  ImageChanger.prototype._addSuffix = function(src){
+  ImageChanger.fn._addSuffix = function(src){
     return __addSuffix(src, this.options.suffix, this.imageTypes);
   };
 
@@ -534,7 +538,7 @@
    * @param string
    * @return string
    */
-  ImageChanger.prototype._removeSuffix = function(src){
+  ImageChanger.fn._removeSuffix = function(src){
     return __removeSuffix(src, this.options.suffix, this.imageTypes);
   };
 
@@ -543,7 +547,7 @@
    * @param string
    * @return void
    */
-  ImageChanger.prototype._transition = function(type, callback){
+  ImageChanger.fn._transition = function(type, callback){
     var _this = this,
         params = $.extend({}, _this.transition.defaults, _this.options.transition || {});
 
@@ -557,25 +561,27 @@
    * if empty create a new transition object
    * @return void
    */
-  ImageChanger.prototype._getTransition = function(){
-    var transition = this.options.transition,
+  ImageChanger.fn._getTransition = function(){
+    var builtin = Transition.builtin,
+        base = Transition.base,
+        transition = this.options.transition,
         type = transition ? transition.type : "";
 
     // not animations
     if( transition === false || transition === "none" || transition === "default" ){
-      return $.extend({}, Transition.base);
+      return $.extend(true, {}, base);
 
     // search builtin transitions (string)
-    }else if( hasProp(Transition.builtin, transition) ){
-      return Transition.builtin[transition];
+    }else if( hasProp(builtin, transition) ){
+      return builtin[transition];
 
     // search builtin transitions (object)
-    }else if( hasProp(Transition.builtin, type) ){
-      return Transition.builtin[type];
+    }else if( hasProp(builtin, type) ){
+      return builtin[type];
 
     // custom transition
     }else if( type === "custom" ){
-      return $.extend({}, Transition.base, transition);
+      return $.extend(true, {}, base, transition);
     }
 
     throw new Error("[ImageChanger] :: Is invalid specification of transition.");
@@ -585,7 +591,7 @@
    * Switching of the image is determined whether or not valid
    * @return boolean
    */
-  ImageChanger.prototype.isChangeEnable = function(){
+  ImageChanger.fn.isChangeEnable = function(){
     return !this.status.error && this.status.enable;
   };
 
@@ -594,7 +600,7 @@
    * @param function
    * @return void
    */
-  ImageChanger.prototype.toggle = function(callback){
+  ImageChanger.fn.toggle = function(callback){
     if( this.status.active ){
       this.offImage(callback);
     }else{
@@ -607,7 +613,7 @@
    * @param function
    * @return void
    */
-  ImageChanger.prototype.onImage = function(callback){
+  ImageChanger.fn.onImage = function(callback){
     if( !this.isChangeEnable() || this.status.active ) return false;
 
     // beforeChange & beforeOnImage
@@ -634,7 +640,7 @@
    * @param function
    * @return void
    */
-  ImageChanger.prototype.offImage = function(callback){
+  ImageChanger.fn.offImage = function(callback){
     if( !this.isChangeEnable() || !this.status.active ) return false;
 
     // beforeChange & beforeOffImage
@@ -660,7 +666,7 @@
    * Temporarily disable this plugin
    * @return void
    */
-  ImageChanger.prototype.disable = function(){
+  ImageChanger.fn.disable = function(){
     this.status.enable = false;
   };
 
@@ -668,7 +674,7 @@
    * To enable
    * @return void
    */
-  ImageChanger.prototype.enable = function(){
+  ImageChanger.fn.enable = function(){
     if( !this.status.error ) this.status.enable = true;
   };
 
@@ -676,7 +682,7 @@
    * Destroy this plugin
    * @return void
    */
-  ImageChanger.prototype.destroy = function(){
+  ImageChanger.fn.destroy = function(){
     if( !this.$elem.data("imageChanger") ) return false;
 
     // transition
@@ -903,7 +909,9 @@
   // fade
   __registerTransition("fade", {
     initialize: function(params){
-      this.$on.css("opacity", 0);
+      if( !this.status.startOn ){
+        this.$on.css("opacity", 0);
+      }
     },
 
     on: function(params, done){
@@ -952,7 +960,9 @@
     },
 
     initialize: function(params){
-      this.$on.css("opacity", 0);
+      if( this.status.startOn ){
+        this.$on.css("opacity", 0);
+      }
     },
 
     on: function(params, done){
