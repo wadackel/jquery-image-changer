@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>jQuery.imageChanger.js</title>
+    <link rel="stylesheet" href="js/code-prettify/prettify.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body><a href="https://github.com/tsuyoshiwada/jquery-image-changer" class="gh-ribbon"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:9999;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <div class="mainvisual">
+      <div data-role="rollover" class="container"><img src="images/mainvisual.jpg" alt=""></div>
+    </div>
+    <div class="container">
+      <h1>jQuery.imageChanger.js<small>DEMO</small></h1>
+      <ul class="gnav">
+        <li><a data-role="rollover" href="#transitions"><img src="images/nav01.jpg" alt="Transitions"></a></li>
+        <li><a data-role="rollover" href="#background-image"><img src="images/nav02.jpg" alt="Background Image"></a></li>
+        <li><a data-role="rollover" href="#data-api"><img src="images/nav03.jpg" alt="Data API"></a></li>
+        <li><a data-role="rollover" href="#download"><img src="images/nav04.jpg" alt="Download"></a></li>
+      </ul>
+      <div id="transitions" class="section">
+        <h2>Transitions</h2>
+        <h3>None</h3>
+        <p><span data-role="rollover" data-ic-transition="false"><img src="images/face01.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: false
+});
+</code></pre>
+
+        </div>
+        <h3>Fade (default)</h3>
+        <p><span data-role="rollover" data-ic-transition="fade"><img src="images/face02.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: &quot;fade&quot;
+  // or
+  // transition: {type: &quot;fade&quot;, ...some options}
+});
+</code></pre>
+
+        </div>
+        <h3>Wink</h3>
+        <p><span data-role="rollover" data-ic-transition="wink"><img src="images/image.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: &quot;wink&quot;
+  // 
+  // transition: {type: &quot;wink&quot;, ...some options}
+});
+</code></pre>
+
+        </div>
+        <h3>Slide</h3>
+        <h4>direction - top</h4>
+        <p><span data-role="rollover" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;top&quot;}"><img src="images/image.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: {type: &quot;slide&quot;, &quot;direction&quot;: &quot;top&quot;}
+});
+</code></pre>
+
+        </div>
+        <h4>direction - bottom</h4>
+        <p><span data-role="rollover" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;bottom&quot;}"><img src="images/image.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: {type: &quot;slide&quot;, &quot;direction&quot;: &quot;bottom&quot;}
+});
+</code></pre>
+
+        </div>
+        <h4>direction - left</h4>
+        <p><span data-role="rollover" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;left&quot;}"><img src="images/image.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: {type: &quot;slide&quot;, &quot;direction&quot;: &quot;left&quot;}
+});
+</code></pre>
+
+        </div>
+        <h4>direction - right</h4>
+        <p><span data-role="rollover" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;right&quot;}"><img src="images/image.jpg" atl="image"></span></p>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  transition: {type: &quot;slide&quot;, &quot;direction&quot;: &quot;right&quot;}
+});
+</code></pre>
+
+        </div>
+      </div>
+      <div id="background-image" class="section">
+        <h2>Background Image</h2>
+        <div class="show-code"><pre><code class="lang-js">$(&quot;[data-role=&#39;rollover&#39;]&quot;).imageChanger({
+  // some options...
+  backgroundImage: true
+});
+</code></pre>
+
+        </div>
+        <div>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="false" class="bg-image">None</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;fade&quot;}" class="bg-image">Fade</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;wink&quot;}" class="bg-image">Wink</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;top&quot;}" class="bg-image">Slide Top</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;right&quot;}" class="bg-image">Slide Right</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;bottom&quot;}" class="bg-image">Slide Bottom</p>
+          <p data-role="rollover" data-ic-backgroundimage="true" data-ic-transition="{&quot;type&quot;: &quot;slide&quot;, &quot;direction&quot;: &quot;left&quot;}" class="bg-image">Slide Left</p>
+        </div>
+      </div>
+      <div id="data-api" class="section">
+        <h2>Data API</h2>
+        <p id="api-sample"><img src="images/face03.jpg" alt="image"></p>
+        <div class="btn-group">
+          <button id="control-toggle" type="button" class="btn">toggle()</button>
+          <button id="control-active" type="button" class="btn">onImage()</button>
+          <button id="control-default" type="button" class="btn">offImage()</button>
+        </div>
+        <div class="show-code"><pre><code class="lang-html">&lt;p id=&quot;api-sample&quot;&gt;&lt;img src=&quot;images/face03.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div&gt;
+  &lt;button id=&quot;control-toggle&quot; type=&quot;button&quot; class=&quot;btn&quot;&gt;toggle()&lt;/button&gt;
+  &lt;button id=&quot;control-active&quot; type=&quot;button&quot; class=&quot;btn&quot;&gt;onImage()&lt;/button&gt;
+  &lt;button id=&quot;control-default&quot; type=&quot;button&quot; class=&quot;btn&quot;&gt;offImage()&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-js">//  In the sample to disable the `hover` option.
+var $apiSample = $(&quot;#api-sample&quot;).imageChanger({hover: false});
+
+// Get the ImageChanger instance.
+var ic = $apiSample.data(&quot;imageChanger&quot;);
+
+// on -&gt; off
+// or
+// off -&gt; on
+$(&quot;#control-toggle&quot;).on(&quot;click&quot;, function(){
+  ic.toggle();
+  return false;
+});
+
+// off -&gt; on
+$(&quot;#control-active&quot;).on(&quot;click&quot;, function(){
+  ic.onImage();
+  return false;
+});
+
+// on -&gt; off
+$(&quot;#control-default&quot;).on(&quot;click&quot;, function(){
+  ic.offImage();
+  return false;
+});
+</code></pre>
+
+        </div>
+      </div>
+      <div id="data-api" class="section">
+        <h2>PNG Sample</h2>
+        <p><span data-role="rollover" data-ic-transition="{&quot;type&quot;: &quot;fade&quot;, &quot;duration&quot;: 500}"><img src="images/face04.png" alt="image"></span></p>
+      </div>
+      <div id="download" class="section">
+        <h2>Download</h2>
+        <p class="btn-group"><a href="https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/dist/jquery.image-changer.js" download="" class="btn">Development</a><a href="https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/dist/jquery.image-changer.min.js" download="" class="btn">Compressed</a><a href="https://github.com/tsuyoshiwada/jQuery.imageChanger" class="btn">View on Github</a></p>
+      </div>
+    </div>
+    <p class="copyright">Copyright &copy; <a href="https://github.com/tsuyoshiwada/jquery-image-changer">tsuyoshiwada All Right Reserved.</a></p>
+    <script type="text/javascript" src="js/code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.sweet-scroll.min.js"></script>
+    <script type="text/javascript" src="js/jquery.image-changer.js"></script>
+    <script type="text/javascript">
+      $(function(){
+      
+        // Syntax Highlight
+        $(".show-code").each(function(){
+          $("code", this).addClass("prettyprint");
+        });
+        prettyPrint();
+      
+      
+        // smooth scroll
+        $("a[href^='#']").sweetScroll({
+          duration: 800
+        });
+      
+      
+        // image changer
+        $("[data-role='rollover']").imageChanger();
+      
+      
+        // data api sample
+        var $apiSample = $("#api-sample").imageChanger({hover: false});
+      
+        ic = $apiSample.data("imageChanger");
+      
+        $("#control-toggle").on("click", function(){
+          ic.toggle();
+          return false;
+        });
+      
+        $("#control-active").on("click", function(){
+          ic.onImage();
+          return false;
+        });
+      
+        $("#control-default").on("click", function(){
+          ic.offImage();
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>

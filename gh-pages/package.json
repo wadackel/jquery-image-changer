@@ -1,0 +1,30 @@
+{
+  "name": "jquery-image-changer",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsuyoshiwada/jquery-image-changer.git"
+  },
+  "author": "tsuyoshiwada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsuyoshiwada/jquery-image-changer/issues"
+  },
+  "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
+  "devDependencies": {
+    "coffee-script": "^1.9.3",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-jade": "^1.0.1",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.0.3",
+    "gulp-watch": "^4.3.1",
+    "marked": "^0.3.3"
+  }
+}
