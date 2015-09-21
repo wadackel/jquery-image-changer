@@ -23,6 +23,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 	(You can be disabled in the options)
 * Can change the suffix
 * Support for some of the transition
+* Support for touch devices
 * Extension of transition
 * Support for `background-image` switching
 * Disabled in the 404 error
