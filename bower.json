@@ -1,6 +1,6 @@
 {
   "name": "jquery-image-changer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/jquery.image-changer.js",
   "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
   "authors": [
