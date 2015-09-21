@@ -1,7 +1,7 @@
 jquery-image-changer
 ====================
 
-[![Build Status](http://img.shields.io/travis/tsuyoshiwada/jquery-image-changer.svg?style=flat-square)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer)
+[![Travis branch](https://img.shields.io/travis/tsuyoshiwada/jquery-image-changer/master.svg?style=flat-square)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)
 [![npm version](https://img.shields.io/npm/v/jquery-image-changer.svg?style=flat-square)](http://badge.fury.io/js/jquery-image-changer)
 [![Bower](https://img.shields.io/bower/v/jquery-image-changer.svg?style=flat-square)](http://bower.io/search/?q=jquery-image-changer)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/LICENSE)
