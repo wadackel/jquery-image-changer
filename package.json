@@ -11,9 +11,10 @@
     "url": "https://github.com/tsuyoshiwada/jquery-image-changer.git"
   },
   "keywords": [
-    "jQuery",
-    "Browser",
-    "Animation",
+    "jquery",
+    "jquery-plugin",
+    "browser",
+    "animation",
     "images"
   ],
   "author": "tsuyoshiwada",

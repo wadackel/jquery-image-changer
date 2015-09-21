@@ -8,10 +8,11 @@
   ],
   "description": "Simple jQuery plug-in that the switching of the image with the animation.",
   "keywords": [
-    "jQuery",
-    "Browser",
-    "images",
-    "Animation"
+    "jquery",
+    "jquery-plugin",
+    "browser",
+    "animation",
+    "images"
   ],
   "dependencies": {
     "jquery": ">= 1.7.2"
