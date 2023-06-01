@@ -8,7 +8,7 @@
   "description": "Simple jQuery plug-in that the switching of the image with the animation.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tsuyoshiwada/jquery-image-changer.git"
+    "url": "https://github.com/wadackel/jquery-image-changer.git"
   },
   "keywords": [
     "jquery",
@@ -17,9 +17,9 @@
     "animation",
     "images"
   ],
-  "author": "tsuyoshiwada",
+  "author": "wadackel",
   "license": "MIT",
-  "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
+  "homepage": "https://github.com/wadackel/jquery-image-changer",
   "dependencies": {
     "jquery": ">=1.7.2"
   },
