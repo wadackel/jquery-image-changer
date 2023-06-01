@@ -2,9 +2,9 @@
   "name": "jquery-image-changer",
   "version": "2.1.1",
   "main": "dist/jquery.image-changer.js",
-  "homepage": "https://github.com/tsuyoshiwada/jquery-image-changer",
+  "homepage": "https://github.com/wadackel/jquery-image-changer",
   "authors": [
-    "tsuyoshiwada <v23.b.wada@gmail.com>"
+    "wadackel <v23.b.wada@gmail.com>"
   ],
   "description": "Simple jQuery plug-in that the switching of the image with the animation.",
   "keywords": [

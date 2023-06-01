@@ -1,9 +1,9 @@
 /*!
  * jquery-image-changer
- * author: tsuyoshiwada
+ * author: wadackel
  * version: 2.1.1
  * license: MIT
- * copyright: tsuyoshiwada
+ * copyright: wadackel
  */
  ;(function(root, factory){
   "use strict";

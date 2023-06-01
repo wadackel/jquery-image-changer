@@ -1,12 +1,12 @@
 jquery-image-changer
 ====================
 
-[![Travis branch](https://img.shields.io/travis/tsuyoshiwada/jquery-image-changer/master.svg?style=flat-square)](https://travis-ci.org/tsuyoshiwada/jquery-image-changer.svg?branch=master)
+[![Travis branch](https://img.shields.io/travis/wadackel/jquery-image-changer/master.svg?style=flat-square)](https://travis-ci.org/wadackel/jquery-image-changer.svg?branch=master)
 [![npm version](https://img.shields.io/npm/v/jquery-image-changer.svg?style=flat-square)](http://badge.fury.io/js/jquery-image-changer)
 [![Bower](https://img.shields.io/bower/v/jquery-image-changer.svg?style=flat-square)](http://bower.io/search/?q=jquery-image-changer)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/wadackel/jquery-image-changer/master/LICENSE)
 
-![jquery-image-changer](https://raw.githubusercontent.com/tsuyoshiwada/jQuery.imageChanger/images/plugin.png)
+![jquery-image-changer](https://raw.githubusercontent.com/wadackel/jQuery.imageChanger/images/plugin.png)
 
 
 Simple jQuery plug-in that the switching of the image with the animation.
@@ -14,7 +14,7 @@ Simple jQuery plug-in that the switching of the image with the animation.
 
 ## Demo
 
-[see jquery-image-changer demo](http://tsuyoshiwada.github.io/jquery-image-changer/)
+[see jquery-image-changer demo](http://wadackel.github.io/jquery-image-changer/)
 
 
 ## Features
@@ -115,7 +115,7 @@ Specifies the transition.
 **Default: fade**  
 **Type: `object`**
 
-![fade transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/fade.gif)
+![fade transition](https://raw.githubusercontent.com/wadackel/jquery-image-changer/images/fade.gif)
 
 ```javascript
 // Simple
@@ -134,7 +134,7 @@ $(selector).imageChanger({
 });
 ```
 
-![none transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/none.gif)
+![none transition](https://raw.githubusercontent.com/wadackel/jquery-image-changer/images/none.gif)
 
 **not animations:**
 
@@ -144,7 +144,7 @@ $(selector).imageChanger({
 });
 ```
 
-![wink transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/wink.gif)
+![wink transition](https://raw.githubusercontent.com/wadackel/jquery-image-changer/images/wink.gif)
 
 **wink:**
 
@@ -167,7 +167,7 @@ $(selector).imageChanger({
 
 **slide:**
 
-![slide transition](https://raw.githubusercontent.com/tsuyoshiwada/jquery-image-changer/images/slide.gif)
+![slide transition](https://raw.githubusercontent.com/wadackel/jquery-image-changer/images/slide.gif)
 
 ```javascript
 // Simple
@@ -455,4 +455,4 @@ First release.
 
 
 ## Author
-[tsuyoshi wada](https://github.com/tsuyoshiwada/)
+[tsuyoshi wada](https://github.com/wadackel/)
